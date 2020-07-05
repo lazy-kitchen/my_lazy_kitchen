@@ -30,7 +30,7 @@
 
 <script>
     export default {
-        name: "Recipe.vue",
+        name: "show-recipe",
         components: {},
         created() {
             // fetch

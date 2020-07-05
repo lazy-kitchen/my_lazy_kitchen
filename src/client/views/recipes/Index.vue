@@ -2,7 +2,7 @@
     <main id="root">
         <h1 class='resource-heading'>All Recipes</h1>
 
-        <RecipeList v-bind:ingredients="[]" />
+        <recipe-list v-bind:ingredients="[]" />
         <!--    <%= link_to 'Add Recipe', new_recipe_path %>-->
     </main>
 </template>
@@ -10,7 +10,7 @@
 <script>
     import RecipeList from "@/client/components/recipes/index/RecipeList";
     export default {
-        name: "Recipes",
+        name: "recipe-index",
         components: {
             RecipeList
         }

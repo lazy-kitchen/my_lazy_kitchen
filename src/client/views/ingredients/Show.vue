@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        name: "Ingredient.vue",
+        name: "show-ingredient",
         components: {},
         created() {
             // fetch
