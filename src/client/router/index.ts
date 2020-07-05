@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
-import Ingredient from '../views/Ingredient.vue';
-import Ingredients from '../views/Ingredients.vue';
-import Recipe from '../views/Recipe.vue';
-import Recipes from '../views/Recipes.vue';
+import Home from '../views/landings/Home.vue';
+import Ingredient from '../views/ingredients/Show.vue';
+import Ingredients from '../views/ingredients/Index.vue';
+import Recipe from '../views/recipes/Show.vue';
+import Recipes from '../views/recipes/Index.vue';
 
 Vue.use(VueRouter);
 
@@ -20,7 +20,7 @@ const routes: Array<RouteConfig> = [
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/landings/About.vue')
     },
     {
       path: '/ingredients',
