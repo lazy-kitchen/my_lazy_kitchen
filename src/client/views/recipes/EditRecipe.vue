@@ -2,9 +2,9 @@
     
 </template>
 
-<script>
+<script lang="ts">
     export default {
-        name: "edit-ingredient"
+        name: "edit-recipe"
     }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-    <ul class='ingredients_list'>
-        <li v-for="ingredient in ingredients" :key="ingredient.id" class='ingredient-list-item'>
+    <ul class="ingredients_list">
+        <li v-for="ingredient in ingredients" :key="ingredient.id" class="ingredient-list-item">
             <router-link :to="{name: 'ingredient', params: {id: ingredient.id}}">{{ingredient.name}}</router-link>
         </li>
     </ul>

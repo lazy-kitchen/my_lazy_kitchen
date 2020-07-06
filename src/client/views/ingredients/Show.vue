@@ -1,7 +1,7 @@
 <template>
     <main id="root">
         <h1>Learn More About {{ingredient.name}}</h1>
-        <p class='ingredient-description'>
+        <p class="ingredient-description">
             {{ingredient.description}}
         </p>
 
@@ -13,9 +13,9 @@
 <!--            </ul>-->
 <!--        </div>-->
 
-        <nav class='resource-directory-links'>
-            <ul class='resource-links-list'>
-                <li class='resource-link-item'>
+        <nav class="resource-directory-links">
+            <ul class="resource-links-list">
+                <li class="resource-link-item">
                     <router-link to="/ingredients">Ingredients</router-link>
                 </li>
             </ul>
@@ -23,10 +23,15 @@
     </main>
 </template>
 
-<script>
+<script lang="ts">
     export default {
         name: "show-ingredient",
         components: {},
+        data() {
+            return {
+                ingredient: {}
+            }
+        },
         created() {
             // fetch
             this.ingredient = {
