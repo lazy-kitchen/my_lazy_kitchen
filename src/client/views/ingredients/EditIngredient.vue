@@ -1,5 +1,5 @@
 <template>
-    <ingredient-form form_method="patch" v-bind:errors="this.errors" v-bind:ingredient="ingredient" />
+    <ingredient-form form_method="patch" v-bind:errors="this.errors" v-bind:ingredient="ingredient" v-bind:button-text="buttonText"/>
 </template>
 
 <script lang="ts">
@@ -18,6 +18,11 @@
                     name: 'Chocolate',
                     description: 'Tasty!'
                 }
+            }
+        },
+        computed: {
+            buttonText: function (): string {
+                return `Update Ingredient: ${this.ingredient.name}`
             }
         }
     });

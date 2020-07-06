@@ -9,6 +9,8 @@ import EditIngredient from '../views/ingredients/EditIngredient.vue';
 
 import Recipe from '../views/recipes/Show.vue';
 import Recipes from '../views/recipes/Index.vue';
+import NewRecipe from "@/client/views/recipes/NewRecipe.vue";
+import EditRecipe from "@/client/views/recipes/EditRecipe.vue";
 
 
 Vue.use(VueRouter);
@@ -51,6 +53,16 @@ const routes: Array<RouteConfig> = [
       path: '/recipes',
       name: 'recipes',
       component: Recipes
+    },
+    {
+        path: '/recipes/new',
+        name: 'new-recipe',
+        component: NewRecipe
+    },
+    {
+        path: '/recipes/:id/edit',
+        name: 'edit-recipe',
+        component: EditRecipe
     },
     {
       path: '/recipes/:id',

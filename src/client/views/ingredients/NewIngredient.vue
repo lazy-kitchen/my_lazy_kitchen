@@ -1,5 +1,5 @@
 <template>
-    <ingredient-form form_method="post" v-bind:errors="this.errors" v-bind:ingredient="ingredient" />
+    <ingredient-form form_method="post" v-bind:errors="this.errors" v-bind:ingredient="ingredient" v-bind:button-text="buttonText"/>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,8 @@
         data: function() {
             return {
                 errors: ["Name can't be blank"],
-                ingredient: {}
+                ingredient: {},
+                buttonText: 'Add Ingredient'
             }
         }
     });
