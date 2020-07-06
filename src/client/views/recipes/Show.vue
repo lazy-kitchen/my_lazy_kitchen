@@ -29,10 +29,17 @@
 </template>
 
 <script lang="ts">
-    export default {
+    import Vue from "vue";
+
+    export default Vue.extend({
         name: "show-recipe",
         components: {},
-        created() {
+        data: function() {
+          return {
+              recipe: {}
+          }
+        },
+        created: function() {
             // fetch
             this.recipe = {
                 id: 1,
@@ -41,7 +48,7 @@
                 completionTime: 1
             }
         }
-    }
+    });
 </script>
 
 <style scoped>

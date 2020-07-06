@@ -11,14 +11,16 @@
 </template>
 
 <script lang="ts">
-// @ is an alias to /src
-export default {
+  import Vue from "vue";
+
+  // @ is an alias to /src
+export default Vue.extend({
   name: 'home',
   components: {},
-  data() {
+  data: function() {
     return {
       query: ''
     }
   }
-}
+});
 </script>

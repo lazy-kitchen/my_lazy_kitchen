@@ -24,15 +24,17 @@
 </template>
 
 <script lang="ts">
-    export default {
+    import Vue from "vue";
+
+    export default Vue.extend({
         name: "show-ingredient",
         components: {},
-        data() {
+        data: function() {
             return {
                 ingredient: {}
             }
         },
-        created() {
+        created: function() {
             // fetch
             this.ingredient = {
                 id: 1,
@@ -40,7 +42,7 @@
                 description: 'Tasty!'
             }
         }
-    }
+    });
 </script>
 
 <style scoped>
