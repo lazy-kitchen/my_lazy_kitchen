@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<any> {
 
         table.string('name').notNullable().unique();
         table.text('description');
-        table.float('completion_time');
+        table.decimal('completion_time');
 
         table.timestamps();
     });

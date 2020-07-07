@@ -1,5 +1,6 @@
 // Update with your config settings.
-
+// @note Run with -x ts to support TypeScript in migration files
+// @note Run with --esm to support module imports/exports in migration files
 module.exports = {
   migrations: {
     directory: './migrations'

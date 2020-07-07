@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<any> {
 
         table.bigInteger('recipe_step_id').references('id').inTable('recipes').index().notNullable();
         table.bigInteger('ingredient_id').references('id').inTable('ingredients').index().notNullable();
-        table.float('amount').notNullable();
+        table.decimal('amount').notNullable();
         // null constraint not placed here to allow ingredients like '1 leaf'
         table.string('unit');
 
