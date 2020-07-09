@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "outDir": "dist/",
     "target": "esnext",
-    "module": "esnext",
+    // TODO use esnext when TS supports NodeJS
+    "module": "commonjs",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
