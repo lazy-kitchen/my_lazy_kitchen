@@ -1,5 +1,11 @@
 import express from 'express';
+
 import Logging from './config/logging';
+import router from './config/routing';
+import {
+    HTTPErrorHandler,
+    NotFoundHandler
+} from "./middleware/error";
 
 const app = express();
 
@@ -7,7 +13,11 @@ const app = express();
 const logging = new Logging();
 app.use(logging.logger);
 
-const router = express.Router();
 app.use('/', router);
+
+// Handle any 404 errors
+app.use(NotFoundHandler);
+// Handle any errors during the request/response cycle
+app.use(HTTPErrorHandler);
 
 export default app;

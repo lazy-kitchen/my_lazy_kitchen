@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createServer } from 'http';
-import { normalizedPort } from "../utilities/http";
+import { normalizedPort } from "../utility/http";
 
 import { serverPort } from '../config/configuration'
 import application from '../application';
