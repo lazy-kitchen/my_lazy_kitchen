@@ -1,8 +1,12 @@
 import express from "express";
 
 import { appVersion } from "../config/configuration";
+import ingredientsRouter from "../routes/ingredients";
 
 const router = express.Router();
+
+// Namespaced/specific functionality routes
+router.use('/api/ingredients', ingredientsRouter);
 
 // Top-level/basic Routes
 
