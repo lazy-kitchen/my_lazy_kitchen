@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors'
+import bodyParser from "body-parser";
 
 import Logging from './config/logging';
 import router from './config/routing';
@@ -14,6 +15,8 @@ const app = express();
 // set up logger
 const logging = new Logging();
 app.use(logging.logger);
+
+app.use(bodyParser.json())
 
 app.use(cors({
     origin: corsOrigin,

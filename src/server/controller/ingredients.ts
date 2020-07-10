@@ -78,3 +78,14 @@ export const show = async(req: express.Request, res: express.Response) => {
             handleHttpError(res, err);
         })
 };
+
+export const create = async (req: express.Request, res: express.Response) => {
+    console.log(req.body.params);
+    res.status(201);
+    res.send(req.body);
+};
+
+export const update = async(req: express.Request, res: express.Response) => {
+    console.log(req.body);
+    res.send(req.body);
+};
