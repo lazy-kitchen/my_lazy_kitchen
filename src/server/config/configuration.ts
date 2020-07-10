@@ -11,3 +11,5 @@ export const logging = {
 export const serverPort = 8000;
 
 export const appVersion = process.env.VERSION || '0.0.0';
+
+export const corsOrigin = process.env.ORIGIN || '*'

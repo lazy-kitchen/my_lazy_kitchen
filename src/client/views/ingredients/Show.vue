@@ -31,16 +31,26 @@
         components: {},
         data: function() {
             return {
-                ingredient: {}
+                ingredient: {
+                    name: '',
+                    description: ''
+                }
             }
         },
-        created: function() {
-            // fetch
-            this.ingredient = {
-                id: 1,
-                name: 'Chocolate',
-                description: 'Tasty!'
+        methods: {
+            loadIngredients: async function(id: number) {
+                try {
+                    // TODO update url
+                    const response = await fetch(`http://localhost:8000/api/ingredients/${id}`);
+                    const responseJSON = await response.json();
+                    this.ingredient = responseJSON.ingredient;
+                } catch (error) {
+                    console.error(error);
+                }
             }
+        },
+        created: async function() {
+            await this.loadIngredients(parseInt(this.$route.params.id));
         }
     });
 </script>

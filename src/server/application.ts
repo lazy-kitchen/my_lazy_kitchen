@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 
 import Logging from './config/logging';
 import router from './config/routing';
@@ -6,6 +7,7 @@ import {
     HTTPErrorHandler,
     NotFoundHandler
 } from "./middleware/error";
+import { corsOrigin} from "./config/configuration";
 
 const app = express();
 
@@ -13,6 +15,10 @@ const app = express();
 const logging = new Logging();
 app.use(logging.logger);
 
+app.use(cors({
+    origin: corsOrigin,
+    optionsSuccessStatus: 200
+}))
 app.use('/', router);
 
 // Handle any 404 errors
