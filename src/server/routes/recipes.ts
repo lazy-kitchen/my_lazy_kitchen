@@ -1,14 +1,17 @@
-import express from 'express';
+import express from "express";
+
+import { index, show, create, update } from '../controller/recipes'
 
 const recipesRouter = express.Router();
 
-// recipesRouter.get('/', index);
-// recipesRouter.get('/:id', show);
+recipesRouter.get('/', index);
+recipesRouter.get('/:id', show);
 
 // recipesRouter.get('/recipes/new');
-// recipesRouter.post('/recipes');
-
+recipesRouter.post('/', create);
+//
 // recipesRouter.get('/recipes/edit');
-// recipesRouter.patch('/recipes/:id');
+recipesRouter.patch('/:id', update);
+
 
 export default recipesRouter;

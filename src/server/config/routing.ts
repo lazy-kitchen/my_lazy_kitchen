@@ -2,11 +2,13 @@ import express from "express";
 
 import { appVersion } from "../config/configuration";
 import ingredientsRouter from "../routes/ingredients";
+import recipesRouter from "../routes/recipes";
 
 const router = express.Router();
 
 // Namespaced/specific functionality routes
 router.use('/api/ingredients', ingredientsRouter);
+router.use('/api/recipes', recipesRouter);
 
 // Top-level/basic Routes
 
