@@ -38,7 +38,7 @@
             }
         },
         methods: {
-            loadIngredients: async function(id: number) {
+            loadIngredient: async function(id: number) {
                 try {
                     // TODO update url
                     const response = await fetch(`http://localhost:8000/api/ingredients/${id}`);
@@ -50,7 +50,7 @@
             }
         },
         created: async function() {
-            await this.loadIngredients(parseInt(this.$route.params.id));
+            await this.loadIngredient(parseInt(this.$route.params.id));
         }
     });
 </script>

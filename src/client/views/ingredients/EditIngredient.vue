@@ -12,11 +12,11 @@
         components: {IngredientForm},
         data: function() {
             return {
-                errors: ["Name can't be blank"],
+                errors: [],
                 ingredient: {
-                    id: 1,
-                    name: 'Chocolate',
-                    description: 'Tasty!'
+                    id: 0,
+                    name: '',
+                    description: ''
                 }
             }
         },
@@ -24,6 +24,21 @@
             buttonText: function (): string {
                 return `Update Ingredient: ${this.ingredient.name}`
             }
+        },
+        methods: {
+            loadIngredient: async function(id: number) {
+                try {
+                    // TODO update url
+                    const response = await fetch(`http://localhost:8000/api/ingredients/${id}`);
+                    const responseJSON = await response.json();
+                    this.ingredient = responseJSON.ingredient;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        },
+        created: async function() {
+            await this.loadIngredient(parseInt(this.$route.params.id));
         }
     });
 </script>
