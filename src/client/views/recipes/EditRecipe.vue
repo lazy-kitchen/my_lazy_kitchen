@@ -1,5 +1,5 @@
 <template>
-    <recipe-form form_method="patch" v-bind:errors="this.errors" v-bind:recipe="recipe" v-bind:button-text="buttonText"/>
+    <recipe-form formMethod="patch" v-bind:form-action="this.formAction" v-bind:errors="this.errors" v-bind:recipe="recipe" v-bind:button-text="buttonText"/>
 </template>
 
 <script lang="ts">
@@ -12,7 +12,7 @@
         components: {RecipeForm},
         data: function() {
             return {
-                errors: ["Name can't be blank"],
+                errors: [],
                 recipe: {
                     id: 1,
                     name: 'Cake',
@@ -24,6 +24,9 @@
         computed: {
             buttonText: function (): string {
                 return `Update Recipe: ${this.recipe.name}`
+            },
+            formAction: function (): string {
+                return `/recipes/${this.$route.params.id}`
             }
         }
     });

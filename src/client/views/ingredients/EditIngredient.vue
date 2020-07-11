@@ -1,5 +1,5 @@
 <template>
-    <ingredient-form form_method="patch" v-bind:errors="this.errors" v-bind:ingredient="ingredient" v-bind:button-text="buttonText"/>
+    <ingredient-form form-method="patch" v-bind:form-action="this.formAction" v-bind:errors="this.errors" v-bind:ingredient="ingredient" v-bind:button-text="buttonText"/>
 </template>
 
 <script lang="ts">
@@ -23,6 +23,9 @@
         computed: {
             buttonText: function (): string {
                 return `Update Ingredient: ${this.ingredient.name}`
+            },
+            formAction: function (): string {
+                return `/ingredients/${this.$route.params.id}`
             }
         },
         methods: {

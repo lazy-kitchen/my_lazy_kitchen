@@ -1,7 +1,7 @@
 <template>
     <div class="form-container">
         <h1>Stuff</h1>
-        <form action="/recipes" id="recipe_form" v-bind:method="form_method">
+        <form v-bind:action="formAction" id="recipe_form" v-bind:method="formMethod">
             <div class="form-group">
                 <label for="name" class="form-control-lbl">Name</label>
                 <input type="text" id="name" name="name" class="form-control" v-model.trim="recipe.name" />
@@ -31,7 +31,8 @@
         components: {FormErrors}
     })
     export default class RecipeForm extends Vue {
-        @Prop() readonly form_method!: string;
+        @Prop() readonly formMethod!: string;
+        @Prop() readonly formAction!: string;
         @Prop() readonly errors!: Array<string>;
         @Prop({default: {}}) recipe!: Recipe;
         @Prop() readonly buttonText!: string;
