@@ -41,7 +41,11 @@
             loadIngredient: async function(id: number) {
                 try {
                     // TODO update url
-                    const response = await fetch(`http://localhost:8000/api/ingredients/${id}`);
+                    const response = await fetch(`http://localhost:8000/api/ingredients/${id}`, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
                     const responseJSON = await response.json();
                     this.ingredient = responseJSON.ingredient;
                 } catch (error) {

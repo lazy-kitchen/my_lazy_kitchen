@@ -47,7 +47,11 @@
           loadRecipe: async function(id: number) {
               try {
                   // TODO update url
-                  const response = await fetch(`http://localhost:8000/api/recipes/${id}`);
+                  const response = await fetch(`http://localhost:8000/api/recipes/${id}`, {
+                      headers: {
+                          'Content-Type': 'application/json'
+                      }
+                  });
                   const responseJSON = await response.json();
                   this.recipe = responseJSON.recipe;
               } catch (error) {

@@ -18,7 +18,11 @@
         async created() {
             try {
                 // TODO update url
-                const response = await fetch('http://localhost:8000/api/recipes')
+                const response = await fetch('http://localhost:8000/api/recipes', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
                 const responseJSON = await response.json();
                 this.recipes = responseJSON.recipes;
             } catch(error) {

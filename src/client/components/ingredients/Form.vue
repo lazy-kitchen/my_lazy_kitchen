@@ -1,7 +1,7 @@
 <template>
     <div class="form-container">
         <h1>Stuff</h1>
-        <form v-bind:action="formAction" id="ingredient_form" v-bind:method="formMethod">
+        <form v-on:submit.prevent="" v-bind:action="formAction" id="ingredient_form" v-bind:method="formMethod">
             <div class="form-group">
                 <label for="name" class="form-control-lbl">Name</label>
                 <input type="text" name="name" id="name" class="form-control" v-model.trim="ingredient.name" />
@@ -29,9 +29,37 @@
         @Prop() readonly formMethod!: string;
         @Prop() readonly formAction!: string;
         @Prop() readonly errors!: Array<string>;
-        @Prop({default: {}}) ingredient!: Ingredient;
+        @Prop({default: {}}) readonly ingredient!: Ingredient;
         @Prop() readonly buttonText!: string;
 
+        async onSubmit() {
+            try {
+
+            } catch (error) {
+                console.error(error);
+                this.errors.push('There was a problem submitting this ingredient')
+            }
+            const response = await fetch('http://localhost:8000/api/ingredients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ingredient: this.ingredient
+                })
+            });
+
+            const responseJSON = await response.json();
+            if (response.ok) {
+
+            } else {
+                if (responseJSON.errors) {
+
+                } else {
+
+                }
+            }
+        }
     }
 
 </script>
