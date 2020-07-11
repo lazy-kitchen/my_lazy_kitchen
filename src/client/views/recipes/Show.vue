@@ -36,17 +36,27 @@
         components: {},
         data: function() {
           return {
-              recipe: {}
+              recipe: {
+                  name: '',
+                  description: '',
+                  completionTime: ''
+              }
           }
         },
-        created: function() {
-            // fetch
-            this.recipe = {
-                id: 1,
-                name: 'Cake',
-                description: 'Tasty!',
-                completionTime: 1
-            }
+        methods: {
+          loadRecipe: async function(id: number) {
+              try {
+                  // TODO update url
+                  const response = await fetch(`http://localhost:8000/api/recipes/${id}`);
+                  const responseJSON = await response.json();
+                  this.recipe = responseJSON.recipe;
+              } catch (error) {
+                  console.error(error);
+              }
+          }
+        },
+        created: async function() {
+            await this.loadRecipe(parseInt(this.$route.params.id));
         }
     });
 </script>

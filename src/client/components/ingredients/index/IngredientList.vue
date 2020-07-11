@@ -18,7 +18,7 @@
         async created() {
             try {
                 // TODO update url
-                const response = await fetch('http://localhost:8000/api/ingredients')
+                const response = await fetch('http://localhost:8000/api/ingredients');
                 const responseJSON = await response.json();
                 this.ingredients = responseJSON.ingredients;
             } catch(error) {

@@ -15,28 +15,15 @@
         // @Prop() private recipes!: Array<object>;
         recipes: Array<Recipe> = [];
 
-        created() {
-            // fetch
-            this.recipes = [
-                {
-                    id: 1,
-                    name: 'Cake',
-                    description: 'Tasty!',
-                    completionTime: 1
-                },
-                {
-                    id: 2,
-                    name: 'Cookie',
-                    description: 'Delicious!',
-                    completionTime: 2
-                },
-                {
-                    id: 3,
-                    name: 'Muffin',
-                    description: 'Wonderful!',
-                    completionTime: 3
-                }
-            ];
+        async created() {
+            try {
+                // TODO update url
+                const response = await fetch('http://localhost:8000/api/recipes')
+                const responseJSON = await response.json();
+                this.recipes = responseJSON.recipes;
+            } catch(error) {
+                console.error(error);
+            }
         }
     }
 </script>
