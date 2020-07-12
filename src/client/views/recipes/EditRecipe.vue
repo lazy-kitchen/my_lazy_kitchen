@@ -1,5 +1,12 @@
 <template>
-    <recipe-form formMethod="patch" v-bind:form-action="this.formAction" v-bind:errors="this.errors" v-bind:recipe="recipe" v-bind:button-text="buttonText"/>
+    <recipe-form formMethod="patch"
+                 v-bind:form-action="this.formAction"
+                 v-bind:errors="this.errors"
+                 v-bind:header-text="headerText"
+                 button-text="Update Recipe"
+                 :override-method="true"
+                 v-bind:initial-recipe="this.recipe"
+    />
 </template>
 
 <script lang="ts">
@@ -14,19 +21,38 @@
             return {
                 errors: [],
                 recipe: {
-                    id: 1,
-                    name: 'Cake',
-                    description: 'Tasty!',
-                    completionTime: 1
+                    id: 0,
+                    name: '',
+                    description: '',
+                    completionTime: 0
                 }
             }
         },
+        methods: {
+            loadRecipe: async function(id: number) {
+                try {
+                    // TODO update url
+                    const response = await fetch(`http://localhost:8000/api/recipes/${id}`, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const responseJSON = await response.json();
+                    this.recipe = responseJSON.recipe;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        },
+        created: async function() {
+            await this.loadRecipe(parseInt(this.$route.params.id));
+        },
         computed: {
-            buttonText: function (): string {
-                return `Update Recipe: ${this.recipe.name}`
-            },
             formAction: function (): string {
-                return `/recipes/${this.$route.params.id}`
+                return `recipes/${this.$route.params.id}`;
+            },
+            headerText: function (): string {
+                return `Update Recipe: ${this.recipe.name}`;
             }
         }
     });

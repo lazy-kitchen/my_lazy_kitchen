@@ -1,5 +1,12 @@
 <template>
-    <ingredient-form form-method="post" form-action="/ingredients" v-bind:errors="this.errors" v-bind:ingredient="ingredient" v-bind:button-text="buttonText"/>
+    <ingredient-form
+            form-method="post"
+            form-action="ingredients"
+            v-bind:errors="this.errors"
+            header-text="Add New Ingredient"
+            button-text="Add Ingredient"
+            v-bind:initial-ingredient="this.ingredient"
+    />
 </template>
 
 <script lang="ts">
@@ -8,13 +15,12 @@
     import IngredientForm from "@/client/components/ingredients/Form.vue";
 
     export default Vue.extend({
-        name: "new-ingredient",
+        name: 'new-ingredient',
         components: {IngredientForm},
         data: function() {
             return {
                 errors: [],
-                ingredient: {},
-                buttonText: 'Add Ingredient'
+                ingredient: {}
             }
         }
     });

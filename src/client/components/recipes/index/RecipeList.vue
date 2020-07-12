@@ -7,15 +7,17 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
+    import Vue from "vue";
     import {Recipe} from "@/server/db/models";
 
-    @Component
-    export default class RecipeList extends Vue {
-        // @Prop() private recipes!: Array<object>;
-        recipes: Array<Recipe> = [];
-
-        async created() {
+    export default Vue.extend({
+        name: 'recipes-list',
+        data: function () {
+            return {
+                recipes: new Array<Recipe>()
+            }
+        },
+        created: async function () {
             try {
                 // TODO update url
                 const response = await fetch('http://localhost:8000/api/recipes', {
@@ -29,7 +31,7 @@
                 console.error(error);
             }
         }
-    }
+    });
 </script>
 
 <style scoped>

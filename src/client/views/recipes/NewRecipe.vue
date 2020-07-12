@@ -1,5 +1,12 @@
 <template>
-    <recipe-form form-method="post" form-action="/recipes" v-bind:errors="this.errors" v-bind:recipe="recipe" v-bind:buttonText="buttonText" />
+    <recipe-form
+            form-method="post"
+            form-action="recipes"
+            v-bind:errors="this.errors"
+            header-text="Add New Recipe"
+            button-text="Add Recipe"
+            v-bind:initial-recipe="this.recipe"
+    />
 </template>
 
 <script lang="ts">
@@ -13,8 +20,7 @@
         data: function() {
             return {
                 errors: [],
-                recipe: {},
-                buttonText: 'Add Recipe'
+                recipe: {}
             }
         }
     });
