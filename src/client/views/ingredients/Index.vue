@@ -2,19 +2,19 @@
     <main id="root">
         <h1 class="resource-heading">All Ingredients</h1>
         <ingredient-list v-bind:ingredients="[]" />
-        <!--    <%= link_to 'Add Ingredient', new_ingredient_path %>-->
+        <router-link to="/ingredients/new">Add Ingredient</router-link>
     </main>
 </template>
 
 <script lang="ts">
     import Vue from "vue";
 
-    import IngredientList from "@/client/components/ingredients/index/IngredientList.vue";
+    import IngredientsList from "@/client/components/ingredients/index/IngredientList.vue";
 
     export default Vue.extend({
         name: "ingredients-index",
         components: {
-            IngredientList
+            IngredientList: IngredientsList
         }
     });
 </script>

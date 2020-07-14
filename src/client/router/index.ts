@@ -9,8 +9,8 @@ import EditIngredient from '../views/ingredients/EditIngredient.vue';
 
 import Recipe from '../views/recipes/Show.vue';
 import Recipes from '../views/recipes/Index.vue';
-import NewRecipe from "@/client/views/recipes/NewRecipe.vue";
-import EditRecipe from "@/client/views/recipes/EditRecipe.vue";
+import NewRecipe from '@/client/views/recipes/NewRecipe.vue';
+import EditRecipe from '@/client/views/recipes/EditRecipe.vue';
 
 
 Vue.use(VueRouter);

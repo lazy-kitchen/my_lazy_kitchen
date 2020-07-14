@@ -1,5 +1,12 @@
 <template>
-    <ingredient-form form_method="patch" v-bind:errors="this.errors" v-bind:ingredient="ingredient" v-bind:button-text="buttonText"/>
+    <ingredient-form form-method="patch"
+                     v-bind:form-action="this.formAction"
+                     v-bind:errors="this.errors"
+                     v-bind:header-text="headerText"
+                     button-text="Update Ingredient"
+                     :override-method="true"
+                     v-bind:initial-ingredient="this.ingredient"
+    />
 </template>
 
 <script lang="ts">
@@ -12,18 +19,40 @@
         components: {IngredientForm},
         data: function() {
             return {
-                errors: ["Name can't be blank"],
+                errors: [],
                 ingredient: {
-                    id: 1,
-                    name: 'Chocolate',
-                    description: 'Tasty!'
+                    id: 0,
+                    name: '',
+                    description: ''
                 }
             }
         },
         computed: {
-            buttonText: function (): string {
-                return `Update Ingredient: ${this.ingredient.name}`
+            formAction: function (): string {
+                return `ingredients/${this.$route.params.id}`;
+            },
+            headerText: function (): string {
+                return `Update Ingredient: ${this.ingredient.name}`;
             }
+        },
+        methods: {
+            loadIngredient: async function(id: number) {
+                try {
+                    // TODO update url
+                    const response = await fetch(`http://localhost:8000/api/ingredients/${id}`, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const responseJSON = await response.json();
+                    this.ingredient = responseJSON.ingredient;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        },
+        created: async function() {
+            await this.loadIngredient(parseInt(this.$route.params.id));
         }
     });
 </script>
