@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import FormErrors from "@/client/components/FormErrors.vue";
-    import {Ingredient} from "@/server/db/models";
+    import Vue from 'vue';
+    import FormErrors from '@/client/components/FormErrors.vue';
+    import {Ingredient} from '@/server/db/models';
 
     export default Vue.extend({
         name: 'ingredient-form',

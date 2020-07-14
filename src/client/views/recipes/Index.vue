@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import Vue from 'vue';
 
-    import RecipesList from "@/client/components/recipes/index/RecipeList.vue";
+    import RecipesList from '@/client/components/recipes/index/RecipeList.vue';
 
     export default Vue.extend({
         name: "recipe-index",

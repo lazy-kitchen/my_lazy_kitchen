@@ -7,8 +7,8 @@ import Ingredients from '../views/ingredients/Index.vue';
 import NewIngredient from '../views/ingredients/NewIngredient.vue';
 import EditIngredient from '../views/ingredients/EditIngredient.vue';
 
-import Recipe from '../views/recipes/Show.vue';
-import Recipes from '../views/recipes/Index.vue';
+import Recipe from '@/client/views/recipes/Show.vue';
+import Recipes from '@/client/views/recipes/Index.vue';
 import NewRecipe from '@/client/views/recipes/NewRecipe.vue';
 import EditRecipe from '@/client/views/recipes/EditRecipe.vue';
 

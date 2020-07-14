@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import Vue from 'vue';
 
-    import RecipeForm from "@/client/components/recipes/Form.vue";
+    import RecipeForm from '@/client/components/recipes/Form.vue';
 
     export default Vue.extend({
         name: "edit-recipe",

@@ -27,7 +27,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import FormErrors from "@/client/components/FormErrors.vue";
+    import FormErrors from '@/client/components/FormErrors.vue';
     import { Recipe } from '@/server/db/models';
 
     export default Vue.extend({

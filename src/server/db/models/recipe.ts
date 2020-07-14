@@ -1,5 +1,5 @@
 import {Model, snakeCaseMappers} from "objection";
-import RecipeStep from "@/server/db/models/recipe_step";
+import RecipeStep from "./recipe_step";
 
 export default class Recipe extends Model {
     id!: number;

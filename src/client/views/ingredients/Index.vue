@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import Vue from 'vue';
 
-    import IngredientsList from "@/client/components/ingredients/index/IngredientList.vue";
+    import IngredientsList from '@/client/components/ingredients/index/IngredientList.vue';
 
     export default Vue.extend({
         name: "ingredients-index",

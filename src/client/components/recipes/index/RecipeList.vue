@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import {Recipe} from "@/server/db/models";
+    import Vue from 'vue';
+    import {Recipe} from '@/server/db/models';
 
     export default Vue.extend({
         name: 'recipes-list',
