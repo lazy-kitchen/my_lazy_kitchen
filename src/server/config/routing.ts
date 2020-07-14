@@ -1,8 +1,8 @@
-import express from "express";
+import express from 'express';
 
-import { appVersion } from "../config/configuration";
-import ingredientsRouter from "../routes/ingredients";
-import recipesRouter from "../routes/recipes";
+import { appVersion } from '../config/configuration';
+import ingredientsRouter from '../routes/ingredients';
+import recipesRouter from '../routes/recipes';
 
 const router = express.Router();
 

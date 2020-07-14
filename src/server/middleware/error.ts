@@ -1,5 +1,5 @@
-import { HTTPError } from "../utility/error";
-import express from "express";
+import { HTTPError } from '../utility/error';
+import express from 'express';
 
 /**
  * Set a handler for any unmatched routes. Set it at the end, below any other declared routes, to ensure that it does not

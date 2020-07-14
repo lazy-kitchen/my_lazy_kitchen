@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'
-import bodyParser from "body-parser";
+import bodyParser from 'body-parser';
 import methodOverride from 'method-override'
 
 import Logging from './config/logging';
@@ -8,8 +8,8 @@ import router from './config/routing';
 import {
     HTTPErrorHandler,
     NotFoundHandler
-} from "./middleware/error";
-import { corsOrigin} from "./config/configuration";
+} from './middleware/error';
+import { corsOrigin} from './config/configuration';
 
 const app = express();
 

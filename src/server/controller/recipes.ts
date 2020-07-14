@@ -1,6 +1,6 @@
 import express from 'express';
-import {handleHttpError} from "../utility/http";
-import {Recipe} from "../db/models";
+import {handleHttpError} from '../utility/http';
+import {Recipe} from '../db/models';
 
 export const index = async (_req: express.Request, res: express.Response) => {
     const dataPromise = new Promise((resolve, _reject) => {

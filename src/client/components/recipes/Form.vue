@@ -2,19 +2,21 @@
     <div class="form-container">
         <h1>{{headerText}}</h1>
         <form v-on:submit.prevent="onSubmit" v-bind:action="formAction" id="recipe_form" v-bind:method="formMethod">
+            <input type="hidden" id="id" name="id" v-model="recipe.id" />
+
             <div class="form-group">
                 <label for="name" class="form-control-lbl">Name</label>
-                <input type="text" id="name" name="name" class="form-control" v-model.trim="initialRecipe.name" />
+                <input type="text" id="name" name="name" class="form-control" v-model.trim="recipe.name" />
             </div>
 
             <div class="form-group">
                 <label for="description" class="form-control-lbl">Description</label>
-                <textarea id="description" name="description" class="form-control form-control-textarea" v-model.trim="initialRecipe.description"></textarea>
+                <textarea id="description" name="description" class="form-control form-control-textarea" v-model.trim="recipe.description"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="completion_time" class="form-control-lbl">Completion Time</label>
-                <input type="text" id="completion_time" name="completion_time" class="form-control" min="0" v-model.number="initialRecipe.completionTime" />
+                <input type="number" id="completion_time" name="completion_time" class="form-control" min="0" v-model.number="recipe.completionTime" />
             </div>
 
             <input type="submit" id="submit_recipe_btn" v-bind:value="buttonText" />

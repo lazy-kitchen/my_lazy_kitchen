@@ -1,4 +1,4 @@
-import path from "path";
+import path from 'path';
 
 // Configuration slices are defined by various individual variables, callbacks, and constants
 // Code may import the specific chunks needed, as necessary.

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import { index, show, create, update } from '../controller/ingredients'
+import { validateNewIngredientParams, validateUpdateIngredientParams } from "../middleware/validator/ingredient";
 import { corsOrigin } from '../config/configuration';
 
 const ingredientsRouter = express.Router();
@@ -9,19 +10,29 @@ const ingredientsRouter = express.Router();
 ingredientsRouter.get('/', index);
 ingredientsRouter.get('/:id', show);
 
-// ingredientsRouter.get('/ingredients/new');
 ingredientsRouter.options('/', cors({
     origin: corsOrigin,
     optionsSuccessStatus: 200
 }));
-ingredientsRouter.post('/', create);
+ingredientsRouter.post(
+    '/',
+    [
+        ...validateNewIngredientParams,
+        create
+    ]
+);
 
-// ingredientsRouter.get('/ingredients/edit');
 ingredientsRouter.options('/:id', cors({
     origin: corsOrigin,
     optionsSuccessStatus: 200
 }));
-ingredientsRouter.patch('/:id', update);
+ingredientsRouter.patch(
+    '/:id',
+    [
+        ...validateUpdateIngredientParams,
+        update
+    ]
+);
 
 
 export default ingredientsRouter;

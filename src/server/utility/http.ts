@@ -6,7 +6,7 @@ import express from 'express';
  * @param {any} portVal Value of port for HTTP server to listen on
  * @return {void|number|boolean}
  */
-import {HTTPError} from "../utility/error";
+import { HTTPError } from '../utility/error';
 
 export const normalizedPort = (portVal: any) => {
   const port = parseInt(portVal, 10);
