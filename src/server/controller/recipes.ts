@@ -1,100 +1,62 @@
 import express from 'express';
 import {handleHttpError} from '../utility/http';
-import {Recipe} from '../db/models';
+import Recipe from '../db/models/recipe';
 
 export const index = async (_req: express.Request, res: express.Response) => {
-    const dataPromise = new Promise((resolve, _reject) => {
-        const recipes: Array<Recipe> = [
-            {
-                id: 1,
-                name: 'Cake',
-                description: 'Tasty!',
-                completionTime: 1
-            },
-            {
-                id: 2,
-                name: 'Cookie',
-                description: 'Delicious!',
-                completionTime: 2
-            },
-            {
-                id: 3,
-                name: 'Muffin',
-                description: 'Wonderful!',
-                completionTime: 3
-            }
-        ];
-        return resolve(
-            recipes
-        );
-    });
-
-    return await dataPromise
-        .then((results) => {
-            res.status(200)
-                .json({
-                    recipes: results
-                });
-        })
-        .catch((err) => {
-            handleHttpError(res, err);
-        })
+    try {
+        const recipes: Array<Recipe> = await Recipe.query();
+        res.status(200)
+            .json({
+                recipes: recipes
+            });
+    } catch(err)  {
+        handleHttpError(res, err);
+    }
 };
 
 export const show = async(req: express.Request, res: express.Response) => {
-    const dataPromise = new Promise((resolve, _reject) => {
-        const recipes: Array<Recipe> = [
-            {
-                id: 1,
-                name: 'Cake',
-                description: 'Tasty!',
-                completionTime: 1
-            },
-            {
-                id: 2,
-                name: 'Cookie',
-                description: 'Delicious!',
-                completionTime: 2
-            },
-            {
-                id: 3,
-                name: 'Muffin',
-                description: 'Wonderful!',
-                completionTime: 3
-            }
-        ];
+    try {
+        const recipe: Recipe = await Recipe.query().findById(req.params.id);
 
-        const recipeId: number = parseInt(req.params.id);
-
-        const currentRecipe: Recipe | undefined = recipes[recipeId - 1]
-
-        return resolve(
-            currentRecipe
-        );
-    });
-
-    return await dataPromise
-        .then((results) => {
-            res.status(200)
-                .json({
-                    recipe: results
-                });
-        })
-        .catch((err) => {
-            handleHttpError(res, err);
-        })
+        res.status(200)
+            .json({
+                recipe: recipe
+            });
+    } catch(err) {
+        handleHttpError(res, err);
+    }
 };
 
 export const create = async (req: express.Request, res: express.Response) => {
     console.log(req.body);
-    res.status(201);
-    res.send({
-        recipe: req.body.recipe
-    });
+    try {
+        const recipe = await Recipe.query().insert(req.body.recipe);
+        res.status(201)
+            .json({
+                recipe: recipe
+            })
+    } catch (error) {
+        console.log(error);
+        res.status(500)
+            .json({
+                errors: [error.message]
+            });
+    }
 };
 
 export const update = async(req: express.Request, res: express.Response) => {
     console.log(req.body);
-    res.send({
-        recipe: req.body.recipe
-    });};
+    try {
+        const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
+        res.status(200)
+            .json({
+                recipe: recipe
+            })
+    } catch (error) {
+        console.log(error);
+        res.status(500)
+            .json({
+                errors: [error.message]
+            });
+    }
+};

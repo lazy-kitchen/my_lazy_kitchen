@@ -13,6 +13,7 @@
     import Vue from 'vue';
 
     import RecipeForm from '@/client/components/recipes/Form.vue';
+    import {serverPort} from "@/server/config/configuration";
 
     export default Vue.extend({
         name: "edit-recipe",
@@ -32,7 +33,7 @@
             loadRecipe: async function(id: number) {
                 try {
                     // TODO update url
-                    const response = await fetch(`http://localhost:8000/api/recipes/${id}`, {
+                    const response = await fetch(`http://localhost:${serverPort}/api/recipes/${id}`, {
                         headers: {
                             'Content-Type': 'application/json'
                         }

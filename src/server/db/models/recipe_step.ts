@@ -1,4 +1,4 @@
-import {Model, snakeCaseMappers} from 'objection';
+import { Model, snakeCaseMappers } from 'objection';
 import Recipe from "./recipe";
 import Ingredient from "./ingredient";
 

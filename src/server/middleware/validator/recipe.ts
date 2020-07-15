@@ -12,8 +12,7 @@ export const validateNewRecipeParams = [
         .escape()
         .isLength({ max: 2000}).withMessage('Recipe must be no longer than 2000 characters'),
     check('recipe.completionTime').exists().withMessage('Recipe must exist')
-        .escape()
-        .isNumeric().withMessage('Recipe must be a valid number'),
+        .toFloat(),
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -25,9 +24,8 @@ export const validateNewRecipeParams = [
 
 export const validateUpdateRecipeParams = [
     check('recipe.id').exists().withMessage('Recipe not found')
-        .trim()
-        .not().isEmpty().withMessage('Recipe not found')
-        .escape(),
+        .toInt()
+        .not().isEmpty().withMessage('Recipe not found'),
     check('recipe.name').exists().withMessage('Recipe must exist')
         .trim()
         .not().isEmpty().withMessage('Recipe must not be empty')
@@ -38,8 +36,7 @@ export const validateUpdateRecipeParams = [
         .escape()
         .isLength({ max: 2000}).withMessage('Recipe must be no longer than 2000 characters'),
     check('recipe.completionTime').exists().withMessage('Recipe must exist')
-        .escape()
-        .isNumeric().withMessage('Recipe must be a valid number'),
+        .toFloat,
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

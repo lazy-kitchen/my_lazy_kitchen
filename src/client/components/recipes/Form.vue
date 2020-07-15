@@ -28,7 +28,8 @@
 <script lang="ts">
     import Vue from 'vue';
     import FormErrors from '@/client/components/FormErrors.vue';
-    import { Recipe } from '@/server/db/models';
+    import Recipe from '@/server/db/models/recipe';
+    import { serverPort } from "@/server/config/configuration";
 
     export default Vue.extend({
         name: 'recipe-form',
@@ -58,7 +59,7 @@
         },
         computed: {
             targetUrl: function (): string {
-                const targetUrl = new URL('http://localhost:8000');
+                const targetUrl = new URL(`http://localhost:${serverPort}`);
                 targetUrl.pathname = `/api/${this.formAction}`;
 
                 return targetUrl.toString();
@@ -98,7 +99,7 @@
 
                     const responseJSON = await response.json();
                     if (response.ok) {
-                        console.log(responseJSON.recipe)
+                        await this.$router.push(`/recipes/${responseJSON.recipe.id}`)
                     } else {
                         if (responseJSON.errors) {
                             console.error(responseJSON.errors);

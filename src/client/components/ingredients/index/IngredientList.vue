@@ -8,7 +8,8 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { Ingredient } from '@/server/db/models';
+    import Ingredient from '@/server/db/models/ingredient';
+    import { serverPort } from "@/server/config/configuration";
 
     export default Vue.extend({
         name: 'ingredients-list',
@@ -20,7 +21,7 @@
         created: async function () {
             try {
                 // TODO update url
-                const response = await fetch('http://localhost:8000/api/ingredients', {
+                const response = await fetch(`http://localhost:${serverPort}/api/ingredients`, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

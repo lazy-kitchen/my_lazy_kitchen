@@ -23,7 +23,8 @@
 <script lang="ts">
     import Vue from 'vue';
     import FormErrors from '@/client/components/FormErrors.vue';
-    import {Ingredient} from '@/server/db/models';
+    import Ingredient from '@/server/db/models/ingredient';
+    import { serverPort } from "@/server/config/configuration";
 
     export default Vue.extend({
         name: 'ingredient-form',
@@ -53,7 +54,7 @@
         },
         computed: {
             targetUrl: function (): string {
-                const targetUrl = new URL('http://localhost:8000');
+                const targetUrl = new URL(`http://localhost:${serverPort}`);
                 targetUrl.pathname = `/api/${this.formAction}`;
 
                 return targetUrl.toString();
@@ -94,7 +95,7 @@
 
                     const responseJSON = await response.json();
                     if (response.ok) {
-                        console.log(responseJSON.ingredient)
+                        await this.$router.push(`/ingredients/${responseJSON.ingredient.id}`)
                     } else {
                         if (responseJSON.errors) {
                             console.error(responseJSON.errors);

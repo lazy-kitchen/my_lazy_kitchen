@@ -10,6 +10,13 @@ import {
     NotFoundHandler
 } from './middleware/error';
 import { corsOrigin} from './config/configuration';
+import Knex from "knex";
+import {Model} from "objection";
+import {dbInfo} from "./db/database";
+
+// set up database connection
+const knex = Knex(dbInfo);
+Model.knex(knex);
 
 const app = express();
 

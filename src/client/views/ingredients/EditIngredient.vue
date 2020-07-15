@@ -13,6 +13,7 @@
     import Vue from 'vue';
 
     import IngredientForm from '@/client/components/ingredients/Form.vue';
+    import {serverPort} from "@/server/config/configuration";
 
     export default Vue.extend({
         name: "edit-ingredient",
@@ -39,7 +40,7 @@
             loadIngredient: async function(id: number) {
                 try {
                     // TODO update url
-                    const response = await fetch(`http://localhost:8000/api/ingredients/${id}`, {
+                    const response = await fetch(`http://localhost:${serverPort}/api/ingredients/${id}`, {
                         headers: {
                             'Content-Type': 'application/json'
                         }

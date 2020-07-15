@@ -22,9 +22,8 @@ export const validateNewIngredientParams = [
 
 export const validateUpdateIngredientParams = [
     check('ingredient.id').exists().withMessage('Ingredient not found')
-        .trim()
-        .not().isEmpty().withMessage('Ingredient not found')
-        .escape(),
+        .toInt()
+        .not().isEmpty().withMessage('Ingredient not found'),
     check('ingredient.name').exists().withMessage('Name must exist')
         .trim()
         .not().isEmpty().withMessage('Name must not be empty')

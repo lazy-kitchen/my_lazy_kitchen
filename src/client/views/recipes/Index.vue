@@ -3,7 +3,7 @@
         <h1 class="resource-heading">All Recipes</h1>
 
         <recipe-list v-bind:ingredients="[]" />
-        <!--    <%= link_to 'Add Recipe', new_recipe_path %>-->
+        <router-link to="/recipes/new">Add Recipe</router-link>
     </main>
 </template>
 

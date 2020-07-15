@@ -8,7 +8,7 @@ export const logging = {
     logDirPath: path.join(__dirname, '..', 'logs')
 };
 
-export const serverPort = 8000;
+export const serverPort = process.env.PORT || 8000;
 
 export const appVersion = process.env.VERSION || '0.0.0';
 
