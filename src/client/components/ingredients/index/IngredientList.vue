@@ -1,7 +1,7 @@
 <template>
-    <ul class="ingredients_list">
+    <ul id="ingredients_list">
         <li v-for="ingredient in ingredients" :key="ingredient.id" class="ingredient-list-item">
-            <router-link :to="{name: 'ingredient', params: {id: ingredient.id}}">{{ingredient.name}}</router-link>
+            <router-link  class="ingredient-link" :to="{name: 'ingredient', params: {id: ingredient.id}}">{{ingredient.name}}</router-link>
         </li>
     </ul>
 </template>
@@ -35,6 +35,21 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    #ingredients_list {
+        list-style: none;
+        padding-left: 0;
+        width: 50%;
+        margin: 0 auto;
 
+        .ingredient-list-item {
+            padding: 2%;
+            border: 1px solid grey;
+            cursor: pointer;
+
+            .ingredient-link {
+                text-decoration: none;
+            }
+        }
+    }
 </style>

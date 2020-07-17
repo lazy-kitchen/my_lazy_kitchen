@@ -1,7 +1,7 @@
 <template>
-    <ul class="recipes_list">
+    <ul id="recipes_list">
         <li v-for="recipe in recipes" :key="recipe.id" class="recipe-list-item">
-            <router-link :to="{name: 'recipe', params: {id: recipe.id}}">{{recipe.name}}</router-link>
+            <router-link class="recipe-link" :to="{name: 'recipe', params: {id: recipe.id}}">{{recipe.name}}</router-link>
         </li>
     </ul>
 </template>
@@ -35,6 +35,21 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    #recipes_list {
+        list-style: none;
+        padding-left: 0;
+        width: 50%;
+        margin: 0 auto;
 
+        .recipe-list-item {
+            padding: 2%;
+            border: 1px solid grey;
+            cursor: pointer;
+
+            .recipe-link {
+                text-decoration: none;
+            }
+        }
+    }
 </style>
