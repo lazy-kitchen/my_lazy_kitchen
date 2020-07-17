@@ -34,5 +34,4 @@ ingredientsRouter.patch(
     ]
 );
 
-
 export default ingredientsRouter;

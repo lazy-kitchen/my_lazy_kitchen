@@ -32,5 +32,4 @@ recipesRouter.patch(
     ]
 );
 
-
 export default recipesRouter;

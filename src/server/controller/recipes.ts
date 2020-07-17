@@ -1,5 +1,5 @@
 import express from 'express';
-import {handleHttpError} from '../utility/http';
+import { handleHttpError } from '../utility/http';
 import Recipe from '../db/models/recipe';
 
 export const index = async (_req: express.Request, res: express.Response) => {
