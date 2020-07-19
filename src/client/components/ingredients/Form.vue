@@ -60,7 +60,7 @@
                 return targetUrl.toString();
             },
             ingredient: function (): Ingredient {
-                return Object.assign({}, (this.initialIngredient));
+                return Object.assign({}, this.initialIngredient);
             }
         },
         methods: {
@@ -76,7 +76,7 @@
                     }
 
                     if (this.overrideMethod) {
-                        headers['X-HTTP-Method-Override'] = 'patch'
+                        headers['X-HTTP-Method-Override'] = 'PATCH'
                     }
 
                     const ingredientPayload = {
@@ -86,7 +86,7 @@
                     };
 
                     const response = await fetch(this.targetUrl, {
-                        method: 'POST',
+                        method: this.formMethod,
                         headers: headers,
                         body: JSON.stringify({
                             ingredient: ingredientPayload

@@ -1,6 +1,6 @@
 <template>
     <ingredient-form
-            form-method="post"
+            form-method="POST"
             form-action="ingredients"
             v-bind:errors="this.errors"
             header-text="Add New Ingredient"

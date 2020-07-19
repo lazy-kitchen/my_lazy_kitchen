@@ -8,8 +8,8 @@ import searchRouter from "../routes/search";
 const router = express.Router();
 
 // Namespaced/specific functionality routes
-router.use('/api/ingredients', ingredientsRouter);
 router.use('/api/recipes', recipesRouter);
+router.use('/api/ingredients', ingredientsRouter);
 router.use('/api/search', searchRouter);
 
 // Top-level/basic Routes

@@ -1,5 +1,5 @@
 <template>
-    <ingredient-form form-method="patch"
+    <ingredient-form form-method="PATCH"
                      v-bind:form-action="this.formAction"
                      v-bind:errors="this.errors"
                      v-bind:header-text="headerText"

@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 
 import { index, show, create, update } from '../controller/recipes'
-import { corsOrigin } from '../config/configuration';
 import { validateNewRecipeParams, validateUpdateRecipeParams } from '../middleware/validator/recipe';
+import { corsOrigin } from '../config/configuration';
 
 const recipesRouter = express.Router();
 
@@ -26,10 +26,12 @@ recipesRouter.options('/:id', cors({
     optionsSuccessStatus: 200
 }));
 recipesRouter.patch(
-    '/:id', [
+    '/:id',
+    [
         ...validateUpdateRecipeParams,
         update
     ]
 );
+
 
 export default recipesRouter;

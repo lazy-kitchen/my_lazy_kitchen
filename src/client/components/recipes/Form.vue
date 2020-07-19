@@ -65,11 +65,13 @@
                 return targetUrl.toString();
             },
             recipe: function (): Recipe {
-                return Object.assign({}, this.initialRecipe)
+                return Object.assign({}, this.initialRecipe);
             }
         },
         methods: {
-            onSubmit: async function() {
+            onSubmit: async function(event: Event) {
+                event.preventDefault();
+
                 try {
                     // reset errors
                     this.errors = [];
@@ -79,7 +81,7 @@
                     }
 
                     if (this.overrideMethod) {
-                        headers['X-HTTP-Method-Override'] = 'patch'
+                        headers['X-HTTP-Method-Override'] = 'PATCH'
                     }
 
                     const recipePayload = {
@@ -90,7 +92,7 @@
                     }
 
                     const response = await fetch(this.targetUrl, {
-                        method: 'POST',
+                        method: this.formMethod,
                         headers: headers,
                         body: JSON.stringify({
                             recipe: recipePayload

@@ -25,13 +25,18 @@ const logging = new Logging();
 app.use(logging.logger);
 
 app.use(methodOverride('X-HTTP-Method-Override'))
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'PUT', 'POST', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['X-HTTP-Method-Override', 'Access-Control-Allow-Headers', 'Cache-Control', 'Pragma', 'Origin', 'Authorization', 'Content-Type', 'X-Requested-With'],
+    optionsSuccessStatus: 200,
+    preflightContinue: true
+}))
+
 
 app.use(bodyParser.json())
 
-app.use(cors({
-    origin: corsOrigin,
-    optionsSuccessStatus: 200
-}))
+
 app.use('/', router);
 
 // Handle any 404 errors

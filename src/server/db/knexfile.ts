@@ -1,12 +1,14 @@
 // Update with your config settings.
 // @note Run with -x ts to support TypeScript in migration files
 // @note Run with --esm to support module imports/exports in migration files
+import { resolve } from 'path';
+
 export default {
   migrations: {
-    directory: './migrations'
+    directory: resolve(__dirname, 'migrations')
   },
   seeds: {
-    directory: './seeds'
+    directory: resolve(__dirname, 'migrations', 'seeds')
   },
   development: {
     client: 'postgresql',
@@ -17,7 +19,13 @@ export default {
       host: 'localhost',
       port: 5433
     },
-    debug: true
+    debug: true,
+    migrations: {
+      directory: resolve(__dirname, 'migrations')
+    },
+    seeds: {
+      directory: resolve(__dirname, 'migrations', 'seeds')
+    },
   },
 
   staging: {

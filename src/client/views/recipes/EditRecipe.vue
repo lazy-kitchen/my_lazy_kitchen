@@ -1,5 +1,5 @@
 <template>
-    <recipe-form formMethod="patch"
+    <recipe-form formMethod="PATCH"
                  v-bind:form-action="this.formAction"
                  v-bind:errors="this.errors"
                  v-bind:header-text="headerText"
@@ -29,6 +29,14 @@
                 }
             }
         },
+        computed: {
+            formAction: function (): string {
+                return `recipes/${this.$route.params.id}`;
+            },
+            headerText: function (): string {
+                return `Update Recipe: ${this.recipe.name}`;
+            }
+        },
         methods: {
             loadRecipe: async function(id: number) {
                 try {
@@ -47,14 +55,6 @@
         },
         created: async function() {
             await this.loadRecipe(parseInt(this.$route.params.id));
-        },
-        computed: {
-            formAction: function (): string {
-                return `recipes/${this.$route.params.id}`;
-            },
-            headerText: function (): string {
-                return `Update Recipe: ${this.recipe.name}`;
-            }
         }
     });
 </script>

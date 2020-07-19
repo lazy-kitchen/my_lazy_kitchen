@@ -45,7 +45,6 @@ export const create = async (req: express.Request, res: express.Response) => {
 };
 
 export const update = async(req: express.Request, res: express.Response) => {
-    console.log(req.body);
     try {
         const ingredient = await Ingredient.query().updateAndFetchById(req.body.ingredient.id, req.body.ingredient);
         res.status(200)

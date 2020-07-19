@@ -1,6 +1,6 @@
 <template>
     <recipe-form
-            form-method="post"
+            form-method="POST"
             form-action="recipes"
             v-bind:errors="this.errors"
             header-text="Add New Recipe"

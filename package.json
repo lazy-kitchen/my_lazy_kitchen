@@ -21,6 +21,7 @@
     "objection": "^2.2.1",
     "pg": "^8.3.0",
     "register-service-worker": "^1.7.1",
+    "slugify": "^1.4.4",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",

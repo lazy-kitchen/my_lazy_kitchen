@@ -1,7 +1,7 @@
 <template>
   <main id="root">
     <h1>Step into My Lazy Kitchen</h1>
-    <form id="home_search_form" action="/search" method="post">
+    <form id="home_search_form" action="/search" method="POST">
       <label for="search" class="visually-hidden">Search Recipes</label>
       <div class="search-controls-container">
         <input type="search" id="search" v-model.trim="query" placeholder="Search recipes..." />
