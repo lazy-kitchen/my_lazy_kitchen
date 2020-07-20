@@ -27,6 +27,6 @@ export const handleHttpError = (res: express.Response, error: HTTPError) => {
     const errorMessage = `${error.status}: ${error.message}`;
     const logMessage = `${error.status} - ${errorMessage}`;
     const status = error.status >= 400 ? error.status : 500;
-    console.error(logMessage);
+    res.app.get('logger').error(logMessage);
     res.status(status).json({message: errorMessage});
 };

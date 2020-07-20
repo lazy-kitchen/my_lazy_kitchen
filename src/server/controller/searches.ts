@@ -2,7 +2,7 @@ import express from 'express';
 import Ingredient from "../db/models/ingredient";
 import {handleHttpError} from "../utility/http";
 
-export const index = async (_req: express.Request, res: express.Response) => {
+export const index = async (req: express.Request, res: express.Response) => {
     try {
         const ingredients: Array<Ingredient> = [];
         if (ingredients.length) {
@@ -20,7 +20,7 @@ export const index = async (_req: express.Request, res: express.Response) => {
             });
         }
     } catch (error) {
-        console.error(error);
+        req.app.get('logger').error(error);
         handleHttpError(res, error)
     }
 }

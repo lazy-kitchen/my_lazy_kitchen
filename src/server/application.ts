@@ -21,8 +21,10 @@ Model.knex(knex);
 const app = express();
 
 // set up logger
-const logging = new Logging();
-app.use(logging.logger);
+export const logging = new Logging();
+app.use(logging.requestLogger);
+// set up global reference core logger for manual logging
+app.set('logger', logging.logger);
 
 app.use(methodOverride('X-HTTP-Method-Override'))
 
