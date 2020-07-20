@@ -101,7 +101,7 @@
 
                     const responseJSON = await response.json();
                     if (response.ok) {
-                        await this.$router.push(`/recipes/${responseJSON.recipe.id}`)
+                        await this.$router.push(`/recipes/${responseJSON.recipe.slug}`)
                     } else {
                         if (responseJSON.errors) {
                             console.error(responseJSON.errors);

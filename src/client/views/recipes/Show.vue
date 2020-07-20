@@ -45,7 +45,7 @@
           }
         },
         methods: {
-          loadRecipe: async function(id: number) {
+          loadRecipe: async function(id: string) {
               try {
                   // TODO update url
                   const response = await fetch(`http://localhost:${serverPort}/api/recipes/${id}`, {
@@ -61,7 +61,7 @@
           }
         },
         created: async function() {
-            await this.loadRecipe(parseInt(this.$route.params.id));
+            await this.loadRecipe(this.$route.params.id);
         }
     });
 </script>

@@ -39,7 +39,7 @@
             }
         },
         methods: {
-            loadIngredient: async function(id: number) {
+            loadIngredient: async function(id: string) {
                 try {
                     // TODO update url
                     const response = await fetch(`http://localhost:${serverPort}/api/ingredients/${id}`, {
@@ -55,7 +55,7 @@
             }
         },
         created: async function() {
-            await this.loadIngredient(parseInt(this.$route.params.id));
+            await this.loadIngredient(this.$route.params.id);
         }
     });
 </script>

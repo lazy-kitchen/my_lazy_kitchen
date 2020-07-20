@@ -16,7 +16,9 @@ export const index = async (_req: express.Request, res: express.Response) => {
 
 export const show = async(req: express.Request, res: express.Response) => {
     try {
-        const ingredient: Ingredient = await Ingredient.query().findById(req.params.id);
+        const ingredient: Ingredient = await Ingredient.query().findOne({
+            slug: req.params.id
+        });
 
         res.status(200)
             .json({

@@ -1,6 +1,7 @@
 import express from 'express';
 import { handleHttpError } from '../utility/http';
 import Recipe from '../db/models/recipe';
+import Ingredient from "@/server/db/models/ingredient";
 
 export const index = async (_req: express.Request, res: express.Response) => {
     try {
@@ -16,7 +17,9 @@ export const index = async (_req: express.Request, res: express.Response) => {
 
 export const show = async(req: express.Request, res: express.Response) => {
     try {
-        const recipe: Recipe = await Recipe.query().findById(req.params.id);
+        const recipe: Recipe = await Recipe.query().findOne({
+            slug: req.params.id
+        });
 
         res.status(200)
             .json({

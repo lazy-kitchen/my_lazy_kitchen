@@ -1,7 +1,7 @@
 <template>
     <ul id="recipes_list">
         <li v-for="recipe in recipes" :key="recipe.id" class="recipe-list-item">
-            <router-link class="recipe-link" :to="{name: 'recipe', params: {id: recipe.id}}">{{recipe.name}}</router-link>
+            <router-link class="recipe-link" :to="{name: 'recipe', params: {id: recipe.slug}}">{{recipe.name}}</router-link>
         </li>
     </ul>
 </template>
