@@ -10,10 +10,12 @@ import { logging } from './configuration';
  * Handles setting up and configuring logging infrastructure
  */
 export default class Logging {
-    logger: (req: IncomingMessage, res: ServerResponse, callback: (err?: Error) => void) => void;
+    readonly requestLogger: (req: IncomingMessage, res: ServerResponse, callback: (err?: Error) => void) => void;
+    readonly logger: winston.Logger;
 
     constructor() {
-        this.logger = Logging.setupMorgan()
+        this.logger = Logging.setupWinston();
+        this.requestLogger = Logging.setupMorgan(this.logger)
     }
 
     /**
@@ -21,8 +23,7 @@ export default class Logging {
      *
      * @return {Handler<Request, Response>}
      */
-    static setupMorgan() {
-        const logger = Logging.setupWinston();
+    static setupMorgan(logger: winston.Logger) {
 
         const morganOptions = {
             stream: {

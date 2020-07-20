@@ -28,7 +28,6 @@ export const show = async(req: express.Request, res: express.Response) => {
 };
 
 export const create = async (req: express.Request, res: express.Response) => {
-    console.log(req.body);
     try {
         const recipe = await Recipe.query().insert(req.body.recipe);
         res.status(201)
@@ -36,7 +35,7 @@ export const create = async (req: express.Request, res: express.Response) => {
                 recipe: recipe
             })
     } catch (error) {
-        console.log(error);
+        req.app.get('logger').error(error);
         res.status(500)
             .json({
                 errors: [error.message]
@@ -45,6 +44,7 @@ export const create = async (req: express.Request, res: express.Response) => {
 };
 
 export const update = async(req: express.Request, res: express.Response) => {
+    console.log(req.body);
     try {
         const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
         res.status(200)
@@ -52,7 +52,7 @@ export const update = async(req: express.Request, res: express.Response) => {
                 recipe: recipe
             })
     } catch (error) {
-        console.log(error);
+        req.app.get('logger').error(error);
         res.status(500)
             .json({
                 errors: [error.message]
