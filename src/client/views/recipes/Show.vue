@@ -10,21 +10,13 @@
             {{recipe.description}}
         </p>
 
-        <!--    <div class="resource-links">-->
-        <!--        <ul class="resource-actions-list">-->
-        <!--            <li class="resource-action-item">-->
-        <!--                <%= link_to "Update Information", edit_recipe_path(@recipe) %>-->
-        <!--            </li>-->
-        <!--        </ul>-->
-        <!--    </div>-->
-
-        <nav class="resource-directory-links">
-            <ul class="resource-links-list">
-                <li class="resource-link-item">
-                    <router-link to="/recipes">Recipes</router-link>
+        <div class="resource-links">
+            <ul class="resource-actions-list">
+                <li class="resource-action-item">
+                    <router-link v-if="recipe.slug" class="recipe-link" :to="{name: 'edit-recipe', params: {id: recipe.slug}}">Edit {{recipe.name}}</router-link>
                 </li>
             </ul>
-        </nav>
+        </div>
     </main>
 </template>
 

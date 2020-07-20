@@ -5,21 +5,13 @@
             {{ingredient.description}}
         </p>
 
-<!--        <div class='resource-links'>-->
-<!--            <ul class='resource-actions-list'>-->
-<!--                <li class='resource-action-item'>-->
-<!--                    <%= link_to 'Update Information', edit_ingredient_path(@ingredient) %>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-
-        <nav class="resource-directory-links">
-            <ul class="resource-links-list">
-                <li class="resource-link-item">
-                    <router-link to="/ingredients">Ingredients</router-link>
+        <div class="resource-links">
+            <ul class="resource-actions-list">
+                <li class="resource-action-item">
+                    <router-link v-if="ingredient.slug" class="ingredient-link" :to="{name: 'edit-ingredient', params: {id: ingredient.slug}}">Edit {{ingredient.name}}</router-link>
                 </li>
             </ul>
-        </nav>
+        </div>
     </main>
 </template>
 
