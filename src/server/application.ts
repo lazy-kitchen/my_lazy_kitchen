@@ -28,9 +28,9 @@ app.set('logger', logging.logger);
 
 app.use(methodOverride('X-HTTP-Method-Override'))
 app.use(cors({
-    origin: '*',
-    methods: ['GET', 'PUT', 'POST', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['X-HTTP-Method-Override', 'Access-Control-Allow-Headers', 'Cache-Control', 'Pragma', 'Origin', 'Authorization', 'Content-Type', 'X-Requested-With'],
+    origin: corsOrigin,
+    methods: ['POST', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['X-HTTP-Method-Override'],
     optionsSuccessStatus: 200,
     preflightContinue: true
 }))
@@ -45,5 +45,7 @@ app.use('/', router);
 app.use(NotFoundHandler);
 // Handle any errors during the request/response cycle
 app.use(HTTPErrorHandler);
+
+// todo revisit user input escaping more comprehensively
 
 export default app;
