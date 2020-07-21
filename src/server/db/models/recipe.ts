@@ -1,8 +1,9 @@
 import { Model, snakeCaseMappers } from "objection";
 import RecipeStep from "./recipe_step";
 import { slugifyIdName } from "../../utility/slug";
+import Application from "./application";
 
-export default class Recipe extends Model {
+export default class Recipe extends Application {
     id!: number;
     name!: string;
     slug!: string;
@@ -10,10 +11,6 @@ export default class Recipe extends Model {
     completionTime!: number;
 
     static tableName = 'recipes';
-
-    static get columnNameMappers() {
-        return snakeCaseMappers();
-    }
 
     static relationMappings = {
         steps: {
@@ -39,10 +36,12 @@ export default class Recipe extends Model {
     };
 
     $beforeInsert() {
+        super.$beforeInsert();
         this.slug = slugifyIdName(this.name);
     }
 
     $beforeUpdate() {
+        super.$beforeUpdate();
         this.slug = slugifyIdName(this.name);
     }
 }

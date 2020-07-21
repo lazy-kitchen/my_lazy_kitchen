@@ -1,17 +1,14 @@
-import { Model, snakeCaseMappers } from 'objection';
+import { snakeCaseMappers } from 'objection';
 import { slugifyIdName } from "../../utility/slug";
+import Application from "./application";
 
-export default class Ingredient extends Model {
+export default class Ingredient extends Application {
     id!: number;
     name!: string;
     slug!: string;
     description!: string;
 
     static tableName = 'ingredients';
-
-    static get columnNameMappers() {
-        return snakeCaseMappers();
-    }
 
     static jsonSchema = {
         type: 'object',
@@ -25,10 +22,12 @@ export default class Ingredient extends Model {
     }
 
     $beforeInsert() {
+        super.$beforeInsert();
         this.slug = slugifyIdName(this.name);
     }
 
     $beforeUpdate() {
+        super.$beforeUpdate();
         this.slug = slugifyIdName(this.name);
     }
 }
