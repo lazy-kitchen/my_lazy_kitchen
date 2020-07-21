@@ -2,8 +2,8 @@
     <main id="root">
         <h1 class="resource-heading">All Ingredients</h1>
 
-        <ingredient-list v-bind:ingredients="[]" />
-        <router-link to="/ingredients/new">Add Ingredient</router-link>
+        <ingredient-list />
+        <router-link to="/ingredients/new" class="new-ingredient-link">Add Ingredient</router-link>
     </main>
 </template>
 

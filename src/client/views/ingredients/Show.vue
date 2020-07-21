@@ -1,6 +1,7 @@
 <template>
     <main id="root">
         <h1>Learn More About {{ingredient.name}}</h1>
+        <img src="https://picsum.photos/1000" alt="A picture of this ingredient" class="ingredient-img" />
         <p class="ingredient-description">
             {{ingredient.description}}
         </p>
@@ -8,7 +9,10 @@
         <div class="resource-links">
             <ul class="resource-actions-list">
                 <li class="resource-action-item">
-                    <router-link v-if="ingredient.slug" class="ingredient-link" :to="{name: 'edit-ingredient', params: {id: ingredient.slug}}">Edit {{ingredient.name}}</router-link>
+                    <router-link v-if="ingredient.slug" class="ingredient-link" :to="{name: 'edit-ingredient', params: {id: ingredient.slug}}">Edit</router-link>
+                </li>
+                <li class="resource-action-item">
+                    <a v-if="ingredient.slug" href="#" class="ingredient-link">Delete</a>
                 </li>
             </ul>
         </div>
@@ -52,6 +56,26 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    .ingredient-img {
+        max-height: 30%;
+        max-width: 30%;
+    }
 
+    .ingredient-description {
+        width: 50%;
+        margin: 1% auto;
+    }
+
+    .resource-actions-list {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        padding-left: 0;
+        margin: 0 auto;
+        justify-content: center;
+        .resource-action-item {
+            padding: 2%;
+        }
+    }
 </style>
