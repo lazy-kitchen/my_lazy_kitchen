@@ -116,6 +116,39 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    #ingredient_form {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid grey;
+        border-radius: 2%;
+        box-shadow: 3px 3px 2px #2c3e50;
+        height: 60vh;
+        width: 50%;
+        margin: 0 auto;
+        padding: 3%;
 
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            margin: 2% auto;
+            .form-control-lbl {
+                text-align: left;
+            }
+        }
+
+        #submit_ingredient_btn {
+            cursor: pointer;
+            margin: 2% auto;
+            width: 40%;
+            padding: 1%;
+
+            position: relative;
+        }
+
+        .form-control-textarea {
+            padding: 2%;
+        }
+    }
 </style>

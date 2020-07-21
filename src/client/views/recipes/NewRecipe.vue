@@ -1,12 +1,14 @@
 <template>
-    <recipe-form
-            form-method="POST"
-            form-action="recipes"
-            v-bind:errors="this.errors"
-            header-text="Add New Recipe"
-            button-text="Add Recipe"
-            v-bind:initial-recipe="this.recipe"
-    />
+    <main id="root">
+        <recipe-form
+                form-method="POST"
+                form-action="recipes"
+                v-bind:errors="this.errors"
+                header-text="Add New Recipe"
+                button-text="Add Recipe"
+                v-bind:initial-recipe="this.recipe"
+        />
+    </main>
 </template>
 
 <script lang="ts">

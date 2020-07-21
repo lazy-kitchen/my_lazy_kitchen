@@ -35,6 +35,10 @@
     margin: 0;
   }
 
+  main {
+    min-height: 75vh;
+  }
+
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -59,6 +63,10 @@
     position: relative;
     bottom: 0;
     margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
   }
 
   .nav {
@@ -70,6 +78,7 @@
       margin: 0 auto;
       width: 30%;
       justify-content: space-around;
+
 
       .action-link {
         padding: 3%;

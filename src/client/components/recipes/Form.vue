@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label for="completion_time" class="form-control-lbl">Completion Time</label>
-                <input type="number" id="completion_time" name="completion_time" class="form-control" min="0" v-model.number="recipe.completionTime" />
+                <input type="number" id="completion_time" name="completion_time" class="form-control form-control-num" min="0" v-model.number="recipe.completionTime" />
             </div>
 
             <input type="submit" id="submit_recipe_btn" v-bind:value="buttonText" />
@@ -122,6 +122,41 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    #recipe_form {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid grey;
+        border-radius: 2%;
+        box-shadow: 3px 3px 2px #2c3e50;
+        height: 60vh;
+        width: 50%;
+        margin: 0 auto;
+        padding: 3%;
 
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            margin: 2% auto;
+            .form-control-lbl {
+                text-align: left;
+            }
+        }
+
+        #submit_recipe_btn {
+            cursor: pointer;
+            margin: 2% auto;
+            width: 40%;
+            padding: 1%;
+        }
+
+        .form-control-textarea {
+            padding: 2%;
+        }
+
+        .form-control-num {
+            width: 20%;
+        }
+    }
 </style>
