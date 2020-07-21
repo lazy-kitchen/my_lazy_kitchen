@@ -1,7 +1,0 @@
-{
-  "watch": ["src"],
-  "ext": "ts",
-  "ignore": ["src/**/*.spec.ts", "src/client/**/*.ts", "src/client/**/*.vue"],
-  "exec": "ts-node src/server/bin/www.ts",
-  "delay": 3000
-}

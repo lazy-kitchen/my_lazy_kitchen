@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "run:development": "nodemon --config nodemon.json",
+    "run:development": "tsnd --respawn --clear --rs --no-notify src/server/bin/www.ts",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -47,10 +47,10 @@
     "@vue/eslint-config-typescript": "^5.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "nodemon": "^2.0.4",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.52",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
   }
