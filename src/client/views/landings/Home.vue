@@ -1,6 +1,6 @@
 <template>
   <main id="root">
-    <h1>Step into My Lazy Kitchen</h1>
+    <h1 class="home-heading">Step into My Lazy Kitchen</h1>
     <form id="home_search_form" action="/search" method="POST">
       <label for="search" class="visually-hidden">Search Recipes</label>
       <div class="search-controls-container">
@@ -33,7 +33,12 @@ export default Vue.extend({
     flex-direction: column;
   }
 
+  .home-heading {
+    margin: 4%;
+  }
+
   #home_search_form {
+    margin: 4%;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -1,6 +1,7 @@
 <template>
     <main id="root">
         <h1>Learn More About {{ingredient.name}}</h1>
+
         <img src="https://picsum.photos/1000" alt="A picture of this ingredient" class="ingredient-img" />
         <p class="ingredient-description">
             {{ingredient.description}}
@@ -58,13 +59,16 @@
 
 <style scoped lang="scss">
     .ingredient-img {
-        max-height: 30%;
-        max-width: 30%;
+        max-height: 25%;
+        max-width: 25%;
     }
 
     .ingredient-description {
         width: 50%;
         margin: 1% auto;
+        text-align: left;
+        min-height: 15vh;
+        padding: 1%;
     }
 
     .resource-actions-list {
