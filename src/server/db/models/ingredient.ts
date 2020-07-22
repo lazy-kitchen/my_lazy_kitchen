@@ -1,6 +1,5 @@
-import { snakeCaseMappers } from 'objection';
-import { slugifyIdName } from "../../utility/slug";
-import Application from "./application";
+import { slugifyIdName } from '../../utility/slug';
+import Application from './application';
 
 export default class Ingredient extends Application {
     id!: number;

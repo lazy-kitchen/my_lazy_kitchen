@@ -1,17 +1,14 @@
-import { Model, snakeCaseMappers } from 'objection';
+import { Model } from 'objection';
 import Recipe from "./recipe";
 import Ingredient from "./ingredient";
+import Application from "./application";
 
-export default class RecipeStep extends Model {
+export default class RecipeStep extends Application {
     id!: number;
     step_number!: number;
     instruction!: string;
 
     static tableName = 'recipe_steps';
-
-    static get columnNameMappers() {
-        return snakeCaseMappers();
-    };
 
     static relationMappings = {
         recipe: {

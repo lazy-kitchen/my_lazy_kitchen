@@ -3,12 +3,12 @@
 // @note Run with --esm to support module imports/exports in migration files
 import { resolve } from 'path';
 
-export default {
+module.exports = {
   migrations: {
     directory: resolve(__dirname, 'migrations')
   },
   seeds: {
-    directory: resolve(__dirname, 'migrations', 'seeds')
+    directory: resolve(__dirname, 'seeds')
   },
   development: {
     client: 'postgresql',
@@ -24,7 +24,7 @@ export default {
       directory: resolve(__dirname, 'migrations')
     },
     seeds: {
-      directory: resolve(__dirname, 'migrations', 'seeds')
+      directory: resolve(__dirname, 'seeds')
     },
   },
 
