@@ -19,6 +19,9 @@
                 <input type="number" id="completion_time" name="completion_time" class="form-control form-control-num" min="0" v-model.number="recipe.completionTime" />
             </div>
 
+            <label for="recipe_steps_container">Instructions</label>
+            <recipe-steps id="recipe_steps_container" />
+
             <input type="submit" id="submit_recipe_btn" v-bind:value="buttonText" />
         </form>
         <form-errors v-bind:errors="errors" />
@@ -27,13 +30,15 @@
 
 <script lang="ts">
     import Vue from 'vue';
+    import { serverPort } from "@/server/config/configuration";
     import FormErrors from '@/client/components/FormErrors.vue';
     import Recipe from '@/server/db/models/recipe';
-    import { serverPort } from "@/server/config/configuration";
+    import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
+
 
     export default Vue.extend({
         name: 'recipe-form',
-        components: {FormErrors},
+        components: {RecipeSteps, FormErrors},
         props: {
             formMethod: String,
             formAction: String,
@@ -41,7 +46,7 @@
             buttonText: String,
             initialRecipe: {
                 type: Object,
-                default: function () {
+                default: function() {
                     return {};
                 }
             },
@@ -129,7 +134,7 @@
         border: 1px solid grey;
         border-radius: 2%;
         box-shadow: 3px 3px 2px #2c3e50;
-        height: 60vh;
+        min-height: 60vh;
         width: 50%;
         margin: 0 auto;
         padding: 3%;

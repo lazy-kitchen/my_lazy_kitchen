@@ -5,7 +5,7 @@ import Application from "./application";
 
 export default class RecipeStep extends Application {
     id!: number;
-    step_number!: number;
+    stepNumber!: number;
     instruction!: string;
 
     static tableName = 'recipe_steps';

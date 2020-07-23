@@ -123,7 +123,7 @@
         border: 1px solid grey;
         border-radius: 2%;
         box-shadow: 3px 3px 2px #2c3e50;
-        height: 60vh;
+        min-height: 60vh;
         width: 50%;
         margin: 0 auto;
         padding: 3%;
