@@ -3,7 +3,7 @@
         <ul id="recipe_steps" ref="recipeStepsList">
             <recipe-step v-for="step in recipeSteps" :key="step.id" />
         </ul>
-        <button id="add_recipe_step_btn" class="add-step" type="button" @click="addRecipeStep">Add Step</button>
+        <button id="add_recipe_step_btn" class="add-step" type="button" @click="addStep">Add Step</button>
     </div>
 </template>
 
@@ -15,15 +15,17 @@
         name: "steps",
         components: {RecipeStep},
         props: {
-          recipeSteps: {
-              type: Array,
-              default: function() {
-                  return [];
-              }
-          }
+            recipeSteps: {
+                type: Array,
+                default: function () {
+                    return [];
+                //    TODO custom getter to get RecipeSteps as Object-id-map
+                }
+            }
         },
+        computed: {},
         methods: {
-            addRecipeStep: function () {
+            addStep: function () {
                 const componentKlass = Vue.extend(RecipeStep);
                 const instance = new componentKlass({
                     propsData: {

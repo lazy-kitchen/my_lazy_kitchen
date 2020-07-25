@@ -13,6 +13,14 @@
     import Vue from 'vue';
 
     import RecipeForm from '@/client/components/recipes/Form.vue';
+    import {mapActions, mapMutations, mapState} from "vuex";
+    import {
+        ADD_RECIPE,
+        ADD_RECIPE_ERROR,
+        GET_RECIPE,
+        RECIPE_FORM_NAMESPACE
+    } from "@/client/store/modules/forms/recipe_form";
+    import store from '@/client/store';
     import {serverPort} from "@/server/config/configuration";
 
     export default Vue.extend({
@@ -21,41 +29,48 @@
         data: function() {
             return {
                 errors: [],
-                recipe: {
-                    id: 0,
-                    name: '',
-                    description: '',
-                    completionTime: 0
-                }
             }
         },
+        async beforeRouteEnter(to, from, next) {
+            await store.dispatch('recipes/recipeForm/getRecipe', {
+                routeId: to.params.id
+            });
+            next();
+        },
+        async beforeRouteUpdate(to, from, next) {
+            await store.dispatch('recipes/recipeForm/getRecipe', {
+                routeId: to.params.id
+            });
+            next();
+        },
         computed: {
+            ...mapState(RECIPE_FORM_NAMESPACE, {
+                recipe: (state: any) => {
+                    return state.recipe;
+                },
+                headerText: function (state: any): string {
+                    return `Update Recipe: ${state.recipe.name}`;
+                }
+            }),
             formAction: function (): string {
                 return `recipes/${this.$route.params.id}`;
-            },
-            headerText: function (): string {
-                return `Update Recipe: ${this.recipe.name}`;
             }
         },
         methods: {
-            loadRecipe: async function(id: string) {
-                try {
-                    // TODO update url
-                    const response = await fetch(`http://localhost:${serverPort}/api/recipes/${id}`, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    const responseJSON = await response.json();
-                    this.recipe = responseJSON.recipe;
-                } catch (error) {
-                    console.error(error);
-                }
-            }
+            ...mapMutations(RECIPE_FORM_NAMESPACE, [
+                ADD_RECIPE,
+                ADD_RECIPE_ERROR
+            ]),
+            ...mapActions(RECIPE_FORM_NAMESPACE, [
+                GET_RECIPE
+            ])
         },
-        created: async function() {
-            await this.loadRecipe(this.$route.params.id);
-        }
+        // created: async function() {
+        //     await store.dispatch({
+        //         type: "recipes/recipeForm/getRecipe",
+        //         routeId: this.$route.params.id
+        //     })
+        // }
     });
 </script>
 

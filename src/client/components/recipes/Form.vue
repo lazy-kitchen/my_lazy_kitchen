@@ -34,6 +34,7 @@
     import FormErrors from '@/client/components/FormErrors.vue';
     import Recipe from '@/server/db/models/recipe';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
+    import {mapState} from "vuex";
 
 
     export default Vue.extend({
@@ -71,7 +72,11 @@
             },
             recipe: function (): Recipe {
                 return Object.assign({}, this.initialRecipe);
-            }
+            },
+            ...mapState({
+                // TODO use better state object typing here
+                recipeSteps: (state: any) => state.recipeSteps
+            })
         },
         methods: {
             onSubmit: async function(event: Event) {
@@ -93,7 +98,8 @@
                         id: this.recipe.id,
                         name: this.recipe.name,
                         description: this.recipe.description,
-                        completionTime: this.recipe.completionTime
+                        completionTime: this.recipe.completionTime,
+                        recipeSteps: this.recipeSteps
                     }
 
                     const response = await fetch(this.targetUrl, {
