@@ -1,15 +1,16 @@
-import Vue from "vue";
 import RecipeStep from "@/server/db/models/recipe_step";
 
 export const RECIPE_STEPS_NAMESPACE = 'recipes/recipeForm/recipe';
 
+export enum StepAction {
+    Create,
+    Update,
+    Delete
+}
+
+
 export interface RecipeStepsState {
-    steps: { [key: number]: {
-            id: number;
-            stepNumber: number;
-            instruction: string;
-        };
-    };
+    steps: { [key: number]: RecipeStep};
 }
 const RecipeSteps = {
     state: () => ({
@@ -31,19 +32,26 @@ const RecipeSteps = {
         },
         // meant to add new recipe step from form, basically pre-reserve space
         addRecipeStep(state: any, recipeStepId: number) {
-            state.recipeSteps[recipeStepId] = {};
+            state.recipeSteps[recipeStepId] = {
+                action: StepAction.Create
+            };
         },
         // meant to remove recipe step from form
         removeRecipeStep(state: RecipeStepsState, {recipeStepId}: { recipeStepId: number }) {
-            Vue.delete(state.steps, recipeStepId);
+            state.steps[recipeStepId].action = StepAction.Delete
         },
-        // updateRecipeStep(state: RecipeStepsState, recipeStepId: number, recipeStep: object) {
-        //     const currentState = state.recipeSteps[recipeStepId] || {};
-        //     state.recipeSteps[recipeStepId] = {
-        //         ...currentState,
-        //         ...recipeStep
-        //     };
-        // },
+        updateRecipeStep(state: RecipeStepsState, recipeStepId: number, recipeStep: object) {
+            const currentStepState: RecipeStep = state.steps[recipeStepId];
+            if (currentStepState) {
+                state.steps[recipeStepId] = {
+                    ...currentStepState,
+                    ...recipeStep,
+                    action: StepAction.Update
+                } as RecipeStep;
+            } else {
+                console.error(`Recipe step not found with identifier: ${recipeStepId}`);
+            }
+        },
     }
 };
 

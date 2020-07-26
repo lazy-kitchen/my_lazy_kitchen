@@ -2,11 +2,13 @@ import { Model } from 'objection';
 import Recipe from "./recipe";
 import Ingredient from "./ingredient";
 import Application from "./application";
+import {StepAction} from "@/client/store/modules/forms/recipe_steps";
 
 export default class RecipeStep extends Application {
     id!: number;
     stepNumber!: number;
     instruction!: string;
+    action?: StepAction
 
     static tableName = 'recipe_steps';
 
