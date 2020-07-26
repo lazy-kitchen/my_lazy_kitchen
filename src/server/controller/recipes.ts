@@ -19,7 +19,7 @@ export const show = async(req: express.Request, res: express.Response) => {
     try {
         const recipe: Recipe = await Recipe.query().findOne({
             slug: req.params.id
-        });
+        }).withGraphFetched('steps');
 
         res.status(200)
             .json({

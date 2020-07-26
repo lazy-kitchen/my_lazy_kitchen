@@ -9,8 +9,9 @@
 <script lang="ts">
     import Vue from 'vue';
     import RecipeStep from "@/server/db/models/recipe_step";
-    import {mapMutations} from "vuex";
+    import {mapMutations, mapState} from "vuex";
     import store from '@/client/store';
+    import {RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
 
     export default Vue.extend({
         name: "recipe-step",
@@ -20,6 +21,12 @@
                 type: Object,
                 default: function() {
                     return {};
+                }
+            },
+            uniqueId: {
+                type: Number,
+                default: function() {
+                    return new Date().getTime();
                 }
             }
         },
@@ -33,28 +40,31 @@
             instructionLabel: function(): string {
                 return `Recipe Instruction ${this.recipeStep.stepNumber}`;
             },
-            uniqueId: function (): number {
-                return new Date().getTime();
-            },
             // If RecipeStep already existed, then it will be accessible in store by its primary key id.
             // However, if it does not already exist,
             // then it may be stored by its unique identifier calculated for the duration of the component instance.
             storeIdentifier: function (): number {
                 return this.recipeStep.id || this.uniqueId;
             },
-            ...mapMutations('recipes/recipeForm', [
-                'updateRecipeStep',
-                'removeRecipeStep'
-            ])
+            // ...mapState(RECIPE_STEP_NAMESPACE)
 
         },
         methods: {
+            ...mapMutations('steps', [
+                'updateRecipeStep',
+                'removeRecipeStep'
+            ]),
             uniqueIdentifier: function (identifierName: string): string {
                 return `${identifierName}_${this.uniqueId}`;
             },
             removeStep: function (storeIdentifier: number) {
-                store.commit('removeRecipeStep', storeIdentifier);
+                store.commit('recipes/recipeForm/recipe/removeRecipeStep', {
+                    recipeStepId: storeIdentifier
+                });
             }
+        },
+        created() {
+        //    load initial component state
         }
     })
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul id="recipe_steps" ref="recipeStepsList">
-            <recipe-step v-for="step in recipeSteps" :key="step.id" />
+            <recipe-step v-for="step in this.displaySteps" :key="step.id" v-bind:initial-recipe-step="step" />
         </ul>
         <button id="add_recipe_step_btn" class="add-step" type="button" @click="addStep">Add Step</button>
     </div>
@@ -10,6 +10,9 @@
 <script lang="ts">
     import Vue from 'vue';
     import RecipeStep from '@/client/components/recipes/recipe_steps/RecipeStep.vue';
+    import store from "@/client/store";
+    import {mapMutations, mapState} from "vuex";
+    import {RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
 
     export default Vue.extend({
         name: "steps",
@@ -23,13 +26,36 @@
                 }
             }
         },
-        computed: {},
+        computed: {
+            ...mapState(RECIPE_STEPS_NAMESPACE, {
+                steps: (state: any) => {
+                    return state.steps;
+                },
+                displaySteps: (state: any) => {
+                    const steps = [];
+                    for (const [_stepId, step] of Object.entries(state.steps)) {
+                        steps.push(step);
+                    }
+
+                    return steps;
+                }
+            }),
+        },
         methods: {
+            ...mapMutations(RECIPE_STEPS_NAMESPACE, [
+
+            ]),
             addStep: function () {
+                const stepUniqueId = new Date().getTime();
+                store.commit('addRecipeStep', stepUniqueId);
+
+
                 const componentKlass = Vue.extend(RecipeStep);
                 const instance = new componentKlass({
                     propsData: {
-                        key: new Date().getTime()
+                        key: stepUniqueId,
+                        uniqueId: stepUniqueId,
+                        initialRecipeStep: {}
                     }
                 });
                 const recipeStepsList = this.$refs.recipeStepsList as HTMLUListElement;

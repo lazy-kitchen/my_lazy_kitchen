@@ -2,7 +2,7 @@
     <recipe-form formMethod="PATCH"
                  v-bind:form-action="this.formAction"
                  v-bind:errors="this.errors"
-                 v-bind:header-text="headerText"
+                 v-bind:header-text="this.headerText"
                  button-text="Update Recipe"
                  :override-method="true"
                  v-bind:initial-recipe="this.recipe"
@@ -21,7 +21,6 @@
         RECIPE_FORM_NAMESPACE
     } from "@/client/store/modules/forms/recipe_form";
     import store from '@/client/store';
-    import {serverPort} from "@/server/config/configuration";
 
     export default Vue.extend({
         name: "edit-recipe",

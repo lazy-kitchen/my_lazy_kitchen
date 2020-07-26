@@ -1,7 +1,6 @@
 import Recipe from "@/server/db/models/recipe";
-import RecipeSteps from "@/client/store/modules/forms/recipe_steps";
-import {serverPort} from "@/server/config/configuration";
-import store from "@/client/store";
+import RecipeSteps, {ADD_RECIPE_STEPS, RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
+import { serverPort } from "@/server/config/configuration";
 
 export const RECIPE_FORM_NAMESPACE = 'recipes/recipeForm'
 export const ADD_RECIPE = 'addRecipe';
@@ -10,25 +9,20 @@ export const GET_RECIPE = 'getRecipe';
 
 export interface RecipeFormState {
     recipe: object;
-    recipeSteps: { [key: number]: object };
     errors: Array<string>;
 }
 
 const RecipeForm = {
     state: () => ({
-        // TODO retrieve recipe from backend and put in vuex
-        // TODO turn state actions into constants
-        recipe: {
-            id: 0,
-            name: '',
-            description: '',
-            completionTime: 0
-        },
         errors: []
     }),
     mutations: {
         addRecipe(state: RecipeFormState, recipe: Recipe) {
-            state.recipe = recipe;
+            state.recipe = {
+                ...state.recipe,
+                ...recipe
+            }
+
         },
         addRecipeError(state: RecipeFormState, errorMessage: string) {
             state.errors.push(errorMessage);
@@ -47,6 +41,7 @@ const RecipeForm = {
                 const recipe = responseJSON.recipe;
 
                 commit(ADD_RECIPE, recipe);
+                commit(`${RECIPE_STEPS_NAMESPACE}/${ADD_RECIPE_STEPS}`, recipe.steps || [], { root: true });
             } catch (error) {
                 console.error(error);
                 commit(ADD_RECIPE_ERROR, error.message);
@@ -54,7 +49,7 @@ const RecipeForm = {
         }
     },
     modules: {
-        recipeSteps: {
+        recipe: {
             namespaced: true,
             ...RecipeSteps
         }

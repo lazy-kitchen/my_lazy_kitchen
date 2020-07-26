@@ -1,4 +1,4 @@
-import { Model, snakeCaseMappers } from "objection";
+import { Model } from "objection";
 import RecipeStep from "./recipe_step";
 import { slugifyIdName } from "../../utility/slug";
 import Application from "./application";
@@ -12,13 +12,15 @@ export default class Recipe extends Application {
 
     static tableName = 'recipes';
 
-    static relationMappings = {
-        steps: {
-            relation: Model.HasManyRelation,
-            modelClass: RecipeStep,
-            join: {
-                from: 'recipes.id',
-                to: 'recipe_steps.recipe_id'
+    static get relationMappings() {
+        return {
+            steps: {
+                relation: Model.HasManyRelation,
+                modelClass: RecipeStep,
+                join: {
+                    from: 'recipes.id',
+                    to: 'recipe_steps.recipe_id'
+                }
             }
         }
     };

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {Recipes} from "@/client/store/modules/recipes";
+import { Recipes } from "@/client/store/modules/recipes";
 
 Vue.use(Vuex)
 
