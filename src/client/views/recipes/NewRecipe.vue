@@ -6,7 +6,7 @@
                 v-bind:errors="this.errors"
                 header-text="Add New Recipe"
                 button-text="Add Recipe"
-                v-bind:initial-recipe="this.recipe"
+                v-bind:recipe="this.recipe"
         />
     </main>
 </template>
@@ -15,15 +15,23 @@
     import Vue from 'vue';
 
     import RecipeForm from '@/client/components/recipes/Form.vue';
+    import {mapState} from "vuex";
+    import {RECIPE_FORM_NAMESPACE} from "@/client/store/modules/forms/recipe_form";
 
     export default Vue.extend({
         name: "new-recipe",
         components: {RecipeForm},
         data: function() {
             return {
-                errors: [],
-                recipe: {}
+                errors: []
             }
+        },
+        computed: {
+            ...mapState(RECIPE_FORM_NAMESPACE, {
+                recipe: (state: any) => {
+                    return state.recipe;
+                }
+            })
         }
     });
 </script>

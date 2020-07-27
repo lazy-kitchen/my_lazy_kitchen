@@ -5,7 +5,7 @@
                  v-bind:header-text="this.headerText"
                  button-text="Update Recipe"
                  :override-method="true"
-                 v-bind:initial-recipe="this.recipe"
+                 v-bind:recipe="this.recipe"
     />
 </template>
 

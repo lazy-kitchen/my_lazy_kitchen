@@ -12,7 +12,7 @@
     import RecipeStep from '@/client/components/recipes/recipe_steps/RecipeStep.vue';
     import store from "@/client/store";
     import {mapMutations, mapState} from "vuex";
-    import {ADD_RECIPE_STEP, ADD_RECIPE_STEPS, RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
+    import {ADD_RECIPE_STEP, RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
 
     export default Vue.extend({
         name: "steps",
@@ -48,20 +48,7 @@
             addStep: function () {
                 const stepUniqueId = new Date().getTime();
 
-                // store.commit('addRecipeStep', stepUniqueId);
-                store.commit(`${RECIPE_STEPS_NAMESPACE}/${ADD_RECIPE_STEP}`, stepUniqueId, { root: true });
-
-                // const componentKlass = Vue.extend(RecipeStep);
-                // const instance = new componentKlass({
-                //     propsData: {
-                //         key: stepUniqueId,
-                //         uniqueId: stepUniqueId,
-                //         recipeStep: {}
-                //     }
-                // });
-                // const recipeStepsList = this.$refs.recipeStepsList as HTMLUListElement;
-                // instance.$mount()
-                // recipeStepsList.appendChild(instance.$el);
+                store.commit(`${RECIPE_STEPS_NAMESPACE}/${ADD_RECIPE_STEP}`, stepUniqueId);
             }
         }
     });

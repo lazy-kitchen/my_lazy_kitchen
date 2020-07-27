@@ -27,6 +27,9 @@ const RecipeForm = {
 
             Vue.set(state, 'recipe', newState);
         },
+        updateRecipe(state: RecipeFormState, {property, value}: {property: string; value: any}) {
+            Vue.set(state.recipe, property, value);
+        },
         addRecipeError(state: RecipeFormState, errorMessage: string) {
             const newState = [...state.errors, errorMessage];
 
@@ -60,5 +63,7 @@ const RecipeForm = {
         }
     }
 };
+
+export const UPDATE_RECIPE = 'updateRecipe';
 
 export default RecipeForm;

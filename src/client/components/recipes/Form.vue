@@ -32,9 +32,9 @@
     import Vue from 'vue';
     import { serverPort } from "@/server/config/configuration";
     import FormErrors from '@/client/components/FormErrors.vue';
-    import Recipe from '@/server/db/models/recipe';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
     import {mapState} from "vuex";
+    import {RECIPE_STEPS_NAMESPACE, UPDATE_RECIPE_STEP} from "@/client/store/modules/forms/recipe_steps";
 
 
     export default Vue.extend({
@@ -45,7 +45,7 @@
             formAction: String,
             headerText: String,
             buttonText: String,
-            initialRecipe: {
+            recipe: {
                 type: Object,
                 default: function() {
                     return {};
@@ -70,13 +70,40 @@
 
                 return targetUrl.toString();
             },
-            recipe: function (): Recipe {
-                return Object.assign({}, this.initialRecipe);
+            name: {
+                get() {
+                    // Note that this assumes that this is linked to vuex-backed property
+                    return this.recipe.name;
+                },
+                set(value) {
+                    this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
+                        property: 'name',
+                        value: value
+                    });
+                }
             },
-            ...mapState({
-                // TODO use better state object typing here
-                recipeSteps: (state: any) => state.recipeSteps
-            })
+            description: {
+                get() {
+                    return this.recipe.description;
+                },
+                set(value) {
+                    this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
+                        property: 'description',
+                        value: value
+                    });
+                }
+            },
+            completionTime: {
+                get() {
+                    return this.recipe.completionTime;
+                },
+                set(value) {
+                    this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
+                        property: 'completionTime',
+                        value: value
+                    });
+                }
+            }
         },
         methods: {
             onSubmit: async function(event: Event) {
@@ -99,7 +126,7 @@
                         name: this.recipe.name,
                         description: this.recipe.description,
                         completionTime: this.recipe.completionTime,
-                        recipeSteps: this.recipeSteps
+                        steps: this.recipe.steps
                     }
 
                     const response = await fetch(this.targetUrl, {

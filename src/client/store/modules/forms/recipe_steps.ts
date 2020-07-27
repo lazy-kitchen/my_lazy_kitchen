@@ -4,9 +4,9 @@ import RecipeStep from "@/server/db/models/recipe_step";
 export const RECIPE_STEPS_NAMESPACE = 'recipes/recipeForm/recipe';
 
 export enum StepAction {
-    Create,
-    Update,
-    Remove
+    Create = 'Create',
+    Update = 'Update',
+    Remove = 'Remove'
 }
 
 export interface RecipeStepsState {
@@ -60,10 +60,15 @@ const RecipeSteps = {
         updateRecipeStep(state: RecipeStepsState, {recipeStepId, property, value}: {recipeStepId: number; property: string; value: any}) {
             const currentStepState: RecipeStep = state.steps[recipeStepId];
 
+            let newStepAction = currentStepState.action;
+            if (currentStepState.action !== StepAction.Create) {
+                newStepAction = StepAction.Update;
+            }
+
             if (currentStepState) {
                 const newStepState = {
                     ...currentStepState,
-                    action: StepAction.Update,
+                    action: newStepAction,
                     [property]: value
                 }
                 Vue.set(state.steps, recipeStepId, newStepState);
