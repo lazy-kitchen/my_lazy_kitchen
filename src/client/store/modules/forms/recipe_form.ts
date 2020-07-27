@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 import Recipe from "@/server/db/models/recipe";
 import RecipeSteps, {ADD_RECIPE_STEPS, RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
 import { serverPort } from "@/server/config/configuration";
@@ -18,14 +20,17 @@ const RecipeForm = {
     }),
     mutations: {
         addRecipe(state: RecipeFormState, recipe: Recipe) {
-            state.recipe = {
+            const newState = {
                 ...state.recipe,
                 ...recipe
-            }
+            };
 
+            Vue.set(state, 'recipe', newState);
         },
         addRecipeError(state: RecipeFormState, errorMessage: string) {
-            state.errors.push(errorMessage);
+            const newState = [...state.errors, errorMessage];
+
+            Vue.set(state, 'errors', newState);
         }
     },
     actions: {

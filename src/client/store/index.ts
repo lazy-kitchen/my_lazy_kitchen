@@ -4,7 +4,7 @@ import { Recipes } from "@/client/store/modules/recipes";
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const options: any = {
   state: {
   },
   mutations: {
@@ -17,4 +17,6 @@ export default new Vuex.Store({
       ...Recipes
     }
   }
-})
+};
+
+export default new Vuex.Store(options);
