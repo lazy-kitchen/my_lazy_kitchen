@@ -5,7 +5,6 @@
                  v-bind:header-text="this.headerText"
                  button-text="Update Recipe"
                  :override-method="true"
-                 v-bind:recipe="this.recipe"
     />
 </template>
 
@@ -63,13 +62,7 @@
             ...mapActions(RECIPE_FORM_NAMESPACE, [
                 GET_RECIPE
             ])
-        },
-        // created: async function() {
-        //     await store.dispatch({
-        //         type: "recipes/recipeForm/getRecipe",
-        //         routeId: this.$route.params.id
-        //     })
-        // }
+        }
     });
 </script>
 

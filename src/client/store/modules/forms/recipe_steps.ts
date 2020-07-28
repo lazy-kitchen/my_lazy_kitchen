@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import RecipeStep from "@/server/db/models/recipe_step";
+import recipe from "@/server/db/models/recipe";
 
 export const RECIPE_STEPS_NAMESPACE = 'recipes/recipeForm/recipe';
 
@@ -10,28 +11,17 @@ export enum StepAction {
 }
 
 export interface RecipeStepsState {
-    steps: { [key: number]: RecipeStep};
+    steps: Array<RecipeStep>;
 }
 
 const RecipeSteps = {
     state: () => ({
-        steps: {}
+        steps: []
     }),
     mutations: {
         // meant to load initial recipe steps state, formatted, from recipe
         addRecipeSteps(state: any, recipeSteps: Array<RecipeStep>) {
-            const formattedRecipeSteps = recipeSteps.reduce((steps, recipeStep) => {
-                return {
-                    ...steps,
-                    [recipeStep.id]: recipeStep
-                };
-            }, {});
-            const newState = {
-                ...state.recipeSteps,
-                ...formattedRecipeSteps
-            };
-
-            Vue.set(state, 'steps', newState);
+            Vue.set(state, 'steps', recipeSteps);
         },
         // meant to add new recipe step from form, basically pre-reserve space
         addRecipeStep(state: any, recipeStepId: number) {
@@ -40,16 +30,31 @@ const RecipeSteps = {
                 action: StepAction.Create
             };
 
-            Vue.set(state.steps, recipeStepId, newStep);
+            // Vue.set(state.steps, recipeStepId, newStep);
+            state.steps.push(newStep);
         },
         // meant to remove recipe step from form
         removeRecipeStep(state: RecipeStepsState, {recipeStepId}: { recipeStepId: number }) {
-            const recipeStep = state.steps[recipeStepId];
+            const currentStepStatePosition: number = state.steps.findIndex((step) => {
+                return step.id === recipeStepId;
+            });
+
+            if (currentStepStatePosition < 0) {
+                console.error(`Recipe step not found with identifier: ${recipeStepId}`);
+                return;
+            }
+
+            const newStepState = state.steps[currentStepStatePosition];
+
+
             // only mark recipe step for deletion if it was not newly created
-            if ((recipeStep.action === StepAction.Create)) {
-                Vue.delete(state.steps, recipeStepId);
+            if ((newStepState.action === StepAction.Create)) {
+                // Vue.delete(state.steps, recipeStepId);
+                state.steps.splice(currentStepStatePosition, 1);
             } else {
-                Vue.set(state.steps[recipeStepId], 'action', StepAction.Remove);
+                newStepState.action = StepAction.Remove;
+                // Vue.set(state.steps[recipeStepId], 'action', StepAction.Remove);
+                state.steps.splice(currentStepStatePosition, 1, newStepState);
             }
         },
         undoRemoveRecipeStep(state: RecipeStepsState, {recipeStepId}: { recipeStepId: number}) {
@@ -58,23 +63,30 @@ const RecipeSteps = {
             Vue.set(state.steps[recipeStepId], 'action', StepAction.Update)
         },
         updateRecipeStep(state: RecipeStepsState, {recipeStepId, property, value}: {recipeStepId: number; property: string; value: any}) {
-            const currentStepState: RecipeStep = state.steps[recipeStepId];
+            const currentStepStatePosition: number = state.steps.findIndex((step) => {
+                return step.id === recipeStepId;
+            });
+
+            if (currentStepStatePosition < 0) {
+                console.error(`Recipe step not found with identifier: ${recipeStepId}`);
+                return;
+            }
+
+            const currentStepState = state.steps[currentStepStatePosition];
 
             let newStepAction = currentStepState.action;
             if (currentStepState.action !== StepAction.Create) {
                 newStepAction = StepAction.Update;
             }
 
-            if (currentStepState) {
-                const newStepState = {
-                    ...currentStepState,
-                    action: newStepAction,
-                    [property]: value
-                }
-                Vue.set(state.steps, recipeStepId, newStepState);
-            } else {
-                console.error(`Recipe step not found with identifier: ${recipeStepId}`);
-            }
+            const newStepState = {
+                ...currentStepState,
+                action: newStepAction,
+                [property]: value
+            } as RecipeStep;
+
+            // Vue.splice(state.steps, recipeStepId, newStepState);
+            state.steps.splice(currentStepStatePosition, 1, newStepState);
         }
     }
 };

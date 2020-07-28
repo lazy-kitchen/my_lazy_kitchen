@@ -33,9 +33,7 @@
     import { serverPort } from "@/server/config/configuration";
     import FormErrors from '@/client/components/FormErrors.vue';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
-    import {mapState} from "vuex";
     import {RECIPE_STEPS_NAMESPACE, UPDATE_RECIPE_STEP} from "@/client/store/modules/forms/recipe_steps";
-
 
     export default Vue.extend({
         name: 'recipe-form',
@@ -45,12 +43,6 @@
             formAction: String,
             headerText: String,
             buttonText: String,
-            recipe: {
-                type: Object,
-                default: function() {
-                    return {};
-                }
-            },
             overrideMethod: {
                 type: Boolean,
                 default: function () {
@@ -64,6 +56,11 @@
             };
         },
         computed: {
+            recipe: {
+              get() {
+                  return this.$store.state.recipes.recipeForm.recipe;
+              }
+            },
             targetUrl: function (): string {
                 const targetUrl = new URL(`http://localhost:${serverPort}`);
                 targetUrl.pathname = `/api/${this.formAction}`;
@@ -73,7 +70,7 @@
             name: {
                 get() {
                     // Note that this assumes that this is linked to vuex-backed property
-                    return this.recipe.name;
+                    return this.$store.state.recipes.recipeForm.recipe.name;
                 },
                 set(value) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
@@ -84,7 +81,7 @@
             },
             description: {
                 get() {
-                    return this.recipe.description;
+                    return this.$store.state.recipes.recipeForm.recipe.description;
                 },
                 set(value) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
@@ -95,7 +92,7 @@
             },
             completionTime: {
                 get() {
-                    return this.recipe.completionTime;
+                    return this.$store.state.recipes.recipeForm.recipe.completionTime;
                 },
                 set(value) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
@@ -111,7 +108,7 @@
 
                 try {
                     // reset errors
-                    this.errors = [];
+                    Vue.set(this, 'errors', []);
 
                     const headers: {[key: string]: string} = {
                         'Content-Type': 'application/json'
@@ -143,11 +140,17 @@
                     } else {
                         if (responseJSON.errors) {
                             console.error(responseJSON.errors);
-                            this.errors.concat(responseJSON.errors)
+                            Vue.set(this, 'errors', [
+                                ...this.errors,
+                                responseJSON.errors
+                            ]);
                         } else {
                             const errorMessage = 'There was a problem submitting this recipe';
                             console.error(errorMessage);
-                            this.errors.push(errorMessage);
+                            Vue.set(this, 'errors', [
+                                ...this.errors,
+                                responseJSON.errors
+                            ]);
                         }
                     }
                 } catch (error) {
