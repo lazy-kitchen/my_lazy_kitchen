@@ -38,7 +38,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { mapMutations } from "vuex";
+    import {mapActions} from "vuex";
     import {
         RECIPE_STEPS_NAMESPACE,
         REMOVE_RECIPE_STEP,
@@ -92,20 +92,24 @@
             }
         },
         methods: {
-            ...mapMutations(RECIPE_STEPS_NAMESPACE, [
-                'removeRecipeStep'
-            ]),
+            // ...mapMutations(RECIPE_STEPS_NAMESPACE, [
+            //     'removeRecipeStep'
+            // ]),
+            ...mapActions(RECIPE_STEPS_NAMESPACE, {
+                REMOVE_RECIPE_STEP,
+                UNDO_REMOVE_RECIPE_STEP
+            }),
             uniqueIdentifier: function (identifierName: string): string {
                 return `${identifierName}_${this.uniqueId}`;
             },
             removeStep: function () {
-                this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${REMOVE_RECIPE_STEP}`, {
-                    recipeStepId: this.storeIdentifier,
+                this.$store.dispatch(`${RECIPE_STEPS_NAMESPACE}/${REMOVE_RECIPE_STEP}`, {
+                    recipeStep: this.recipeStep,
                 });
             },
             undoRemoveStep: function () {
-                this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UNDO_REMOVE_RECIPE_STEP}`, {
-                    recipeStepId: this.storeIdentifier
+                this.$store.dispatch(`${RECIPE_STEPS_NAMESPACE}/${UNDO_REMOVE_RECIPE_STEP}`, {
+                    recipeStep: this.recipeStep
                 });
             }
 

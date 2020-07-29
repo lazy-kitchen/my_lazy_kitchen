@@ -19,8 +19,13 @@
                 <input type="number" id="completion_time" name="completion_time" class="form-control form-control-num" min="0" v-model.number="recipe.completionTime" />
             </div>
 
-            <label for="recipe_steps_container">Instructions</label>
-            <recipe-steps id="recipe_steps_container" />
+            <div id="recipe_steps_lists" class="form-group">
+                <label for="recipe_steps_container">Instructions</label>
+                <recipe-steps id="recipe_steps_container" />
+
+                <label v-if="this.$store.state.recipes.recipeForm.recipe.removedSteps.length" for="removed_recipe_steps_container">Removed Instructions</label>
+                <removed-steps id="removed_recipe_steps_container" />
+            </div>
 
             <input type="submit" id="submit_recipe_btn" v-bind:value="buttonText" />
         </form>
@@ -34,10 +39,11 @@
     import FormErrors from '@/client/components/FormErrors.vue';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
     import {RECIPE_STEPS_NAMESPACE, UPDATE_RECIPE_STEP} from "@/client/store/modules/forms/recipe_steps";
+    import RemovedSteps from "@/client/components/recipes/recipe_steps/RemovedSteps.vue";
 
     export default Vue.extend({
         name: 'recipe-form',
-        components: {RecipeSteps, FormErrors},
+        components: {RecipeSteps, RemovedSteps, FormErrors},
         props: {
             formMethod: String,
             formAction: String,

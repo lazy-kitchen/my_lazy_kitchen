@@ -50,6 +50,10 @@
                 const stepUniqueId = new Date().getTime();
 
                 store.commit(`${RECIPE_STEPS_NAMESPACE}/${ADD_RECIPE_STEP}`, stepUniqueId);
+                // whenever a new step is added, steps (order) should be recalculated
+                store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEPS}`, {
+                    steps: this.steps
+                });
             }
         }
     });
