@@ -135,8 +135,6 @@
                         }
                     }
 
-                    debugger
-
                     const response = await fetch(this.targetUrl, {
                         method: this.formMethod,
                         headers: headers,
