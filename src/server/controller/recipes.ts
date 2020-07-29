@@ -1,7 +1,6 @@
 import express from 'express';
 import { handleHttpError } from '../utility/http';
 import Recipe from '../db/models/recipe';
-import Ingredient from "@/server/db/models/ingredient";
 
 export const index = async (_req: express.Request, res: express.Response) => {
     try {
@@ -47,7 +46,6 @@ export const create = async (req: express.Request, res: express.Response) => {
 };
 
 export const update = async(req: express.Request, res: express.Response) => {
-    console.log(req.body);
     try {
         const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
         res.status(200)

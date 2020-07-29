@@ -129,8 +129,13 @@
                         name: this.recipe.name,
                         description: this.recipe.description,
                         completionTime: this.recipe.completionTime,
-                        steps: this.recipe.steps
+                        steps: {
+                            updatedSteps: this.$store.state.recipes.recipeForm.recipe.steps,
+                            removedSteps: this.$store.state.recipes.recipeForm.recipe.removedSteps
+                        }
                     }
+
+                    debugger
 
                     const response = await fetch(this.targetUrl, {
                         method: this.formMethod,
