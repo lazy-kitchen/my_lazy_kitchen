@@ -38,8 +38,14 @@
     import { serverPort } from "@/server/config/configuration";
     import FormErrors from '@/client/components/FormErrors.vue';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
-    import {RECIPE_STEPS_NAMESPACE, UPDATE_RECIPE_STEP} from "@/client/store/modules/forms/recipe_steps";
+    import {
+        GET_CREATED_STEPS, GET_REMOVED_STEPS, GET_UPDATED_STEPS,
+        RECIPE_STEPS_NAMESPACE,
+        UPDATE_RECIPE_STEP
+    } from "@/client/store/modules/forms/recipe_steps";
     import RemovedSteps from "@/client/components/recipes/recipe_steps/RemovedSteps.vue";
+    import {mapGetters} from "vuex";
+    import Recipe from "@/server/db/models/recipe";
 
     export default Vue.extend({
         name: 'recipe-form',
@@ -62,8 +68,13 @@
             };
         },
         computed: {
+            ...mapGetters(RECIPE_STEPS_NAMESPACE, [
+                GET_CREATED_STEPS,
+                GET_UPDATED_STEPS,
+                GET_REMOVED_STEPS
+            ]),
             recipe: {
-              get() {
+              get(): Recipe {
                   return this.$store.state.recipes.recipeForm.recipe;
               }
             },
@@ -74,11 +85,11 @@
                 return targetUrl.toString();
             },
             name: {
-                get() {
+                get(): string {
                     // Note that this assumes that this is linked to vuex-backed property
                     return this.$store.state.recipes.recipeForm.recipe.name;
                 },
-                set(value) {
+                set(value: string) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
                         property: 'name',
                         value: value
@@ -86,10 +97,10 @@
                 }
             },
             description: {
-                get() {
+                get(): string {
                     return this.$store.state.recipes.recipeForm.recipe.description;
                 },
-                set(value) {
+                set(value: string) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
                         property: 'description',
                         value: value
@@ -97,10 +108,10 @@
                 }
             },
             completionTime: {
-                get() {
+                get(): number {
                     return this.$store.state.recipes.recipeForm.recipe.completionTime;
                 },
-                set(value) {
+                set(value: number) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
                         property: 'completionTime',
                         value: value
@@ -130,8 +141,9 @@
                         description: this.recipe.description,
                         completionTime: this.recipe.completionTime,
                         steps: {
-                            updatedSteps: this.$store.state.recipes.recipeForm.recipe.steps,
-                            removedSteps: this.$store.state.recipes.recipeForm.recipe.removedSteps
+                            createdSteps: this.createdSteps,
+                            updatedSteps: this.updatedSteps,
+                            removedSteps: this.removedSteps
                         }
                     }
 

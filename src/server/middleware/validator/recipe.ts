@@ -11,6 +11,10 @@ export const validateNewRecipeParams = [
         .isLength({ max: 2000}).withMessage('Recipe must be no longer than 2000 characters'),
     check('recipe.completionTime').exists().withMessage('Recipe must exist')
         .toFloat(),
+    check('recipe.recipe_steps.*.id')
+        .toInt(),
+    check('recipe.recipe_steps.*.step_number')
+        .toInt(),
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

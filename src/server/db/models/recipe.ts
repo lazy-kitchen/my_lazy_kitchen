@@ -2,6 +2,7 @@ import { Model } from "objection";
 import RecipeStep from "./recipe_step";
 import { slugifyIdName } from "../../utility/slug";
 import Application from "./application";
+import {RecipePayload} from "@/server/controller/recipes";
 
 export default class Recipe extends Application {
     id!: number;
@@ -45,5 +46,62 @@ export default class Recipe extends Application {
     $beforeUpdate() {
         super.$beforeUpdate();
         this.slug = slugifyIdName(this.name);
+    }
+
+    static async fullUpdate(recipe: RecipePayload) {
+        const recipeTrx = await Recipe.startTransaction();
+        try {
+            const recipeStepTrx = await RecipeStep.startTransaction();
+            try {
+
+                if (recipe.steps.createdSteps) {
+                    for (let createStep of recipe.steps.createdSteps) {
+                        delete createStep.action;
+                        await Recipe.relatedQuery('steps')
+                            .for(recipe.id)
+                            .insert(createStep);
+                    }
+                }
+
+                if (recipe.steps.updatedSteps) {
+                    for (let updateStep of recipe.steps.updatedSteps) {
+                        delete updateStep.action;
+                        await Recipe.relatedQuery('steps')
+                            .for(recipe.id)
+                            .patch(updateStep);
+                    }
+                }
+
+                if (recipe.steps.removedSteps) {
+                    for (let updateStep of recipe.steps.removedSteps) {
+                        await Recipe.relatedQuery('steps')
+                            .for(recipe.id)
+                            .delete()
+                            .whereIn(
+                                'id',
+                                recipe.steps.removedSteps.map((step) => {return step.id;})
+                            );
+                    }
+                }
+
+                recipeStepTrx.commit();
+            } catch (error) {
+                await recipeStepTrx.rollback();
+                // noinspection ExceptionCaughtLocallyJS
+                throw error;
+            }
+
+            const updatedRecipe = await Recipe.query()
+                .updateAndFetchById(recipe.id, recipe)
+                .withGraphFetched('steps');
+
+            recipeTrx.commit();
+
+            return updatedRecipe;
+        } catch (error) {
+            recipeTrx.rollback();
+            // noinspection ExceptionCaughtLocallyJS
+            throw error;
+        }
     }
 }

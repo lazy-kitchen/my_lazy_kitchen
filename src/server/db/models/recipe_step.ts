@@ -37,10 +37,10 @@ export default class RecipeStep extends Application {
 
     static jsonSchema = {
         type: 'object',
-        required: ['step_number', 'instruction'],
+        required: ['stepNumber', 'instruction'],
         properties: {
             id: { type: 'integer' },
-            step_number: { type: 'integer' },
+            stepNumber: { type: 'integer' },
             instruction: { type: 'string', maxLength: 1000 }
         }
     }

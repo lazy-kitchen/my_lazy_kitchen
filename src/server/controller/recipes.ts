@@ -1,6 +1,7 @@
 import express from 'express';
 import { handleHttpError } from '../utility/http';
 import Recipe from '../db/models/recipe';
+import RecipeStep from "@/server/db/models/recipe_step";
 
 export const index = async (_req: express.Request, res: express.Response) => {
     try {
@@ -47,7 +48,8 @@ export const create = async (req: express.Request, res: express.Response) => {
 
 export const update = async(req: express.Request, res: express.Response) => {
     try {
-        const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
+        // const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
+        const recipe = await Recipe.fullUpdate(req.body.recipe);
         res.status(200)
             .json({
                 recipe: recipe
@@ -60,3 +62,11 @@ export const update = async(req: express.Request, res: express.Response) => {
             });
     }
 };
+
+export interface RecipePayload extends Recipe{
+    steps: {
+        createdSteps?: Array<RecipeStep>;
+        updatedSteps?: Array<RecipeStep>;
+        removedSteps?: Array<RecipeStep>;
+    }
+}

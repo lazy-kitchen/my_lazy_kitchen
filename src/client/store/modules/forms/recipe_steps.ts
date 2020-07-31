@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import RecipeStep from "@/server/db/models/recipe_step";
-import recipe from "@/server/db/models/recipe";
 
 export const RECIPE_STEPS_NAMESPACE = 'recipes/recipeForm/recipe';
 
@@ -16,6 +15,10 @@ export const REMOVE_STEP = 'removeStep';
 export const UNDO_REMOVE_RECIPE_STEP = 'undoRemoveRecipeStep';
 export const UNDO_REMOVE_STEP = 'undoRemoveStep';
 export const REMOVE_REMOVED_STEP = 'removeRemovedStep';
+
+export const GET_CREATED_STEPS = 'createdSteps';
+export const GET_UPDATED_STEPS = 'updatedSteps';
+export const GET_REMOVED_STEPS = 'removedSteps';
 
 export enum StepAction {
     Create = 'Create',
@@ -33,6 +36,29 @@ const RecipeSteps = {
         steps: [],
         removedSteps: []
     }),
+    getters: {
+        createdSteps: (state: RecipeStepsState) => {
+            return state.steps.filter((step) => {
+                return step.action === StepAction.Create;
+            }).map((step) => {
+                // Not sure how ORM will react if a fake id value, so the be safe it is removed
+                return {
+                    ...step,
+                    id: undefined
+                };
+            });
+        },
+        updatedSteps: (state: RecipeStepsState) => {
+            return state.steps.filter((step) => {
+                return step.action === StepAction.Update;
+            });
+        },
+        removedSteps: (state: RecipeStepsState) => {
+            return state.removedSteps.filter((step) => {
+                return step.action === StepAction.Remove;
+            });
+        },
+    },
     mutations: {
         // meant to load initial recipe steps state, formatted, from recipe
         addRecipeSteps(state: RecipeStepsState, recipeSteps: Array<RecipeStep>) {
