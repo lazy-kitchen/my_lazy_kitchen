@@ -10,7 +10,7 @@ export const ADD_RECIPE_ERROR = 'addRecipeError';
 export const GET_RECIPE = 'getRecipe';
 
 export interface RecipeFormState {
-    recipe: object;
+    recipe: Recipe;
     errors: Array<string>;
 }
 

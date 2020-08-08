@@ -17,7 +17,7 @@
         ADD_RECIPE,
         ADD_RECIPE_ERROR,
         GET_RECIPE,
-        RECIPE_FORM_NAMESPACE
+        RECIPE_FORM_NAMESPACE, RecipeFormState
     } from "@/client/store/modules/forms/recipe_form";
     import store from '@/client/store';
 
@@ -43,10 +43,10 @@
         },
         computed: {
             ...mapState(RECIPE_FORM_NAMESPACE, {
-                recipe: (state: any) => {
+                recipe: (state: RecipeFormState) => {
                     return state.recipe;
                 },
-                headerText: function (state: any): string {
+                headerText: function (state: RecipeFormState): string {
                     return `Update Recipe: ${state.recipe.name}`;
                 }
             }),

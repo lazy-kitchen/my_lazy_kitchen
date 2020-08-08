@@ -27,11 +27,9 @@
             }
         },
         computed: {
-            ...mapState(RECIPE_FORM_NAMESPACE, {
-                recipe: (state: any) => {
-                    return state.recipe;
-                }
-            })
+            ...mapState(RECIPE_FORM_NAMESPACE, [
+                'recipe'
+            ]),
         }
     });
 </script>
