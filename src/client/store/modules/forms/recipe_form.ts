@@ -1,8 +1,8 @@
 import Vue from 'vue';
 
-import Recipe from "@/server/db/models/recipe";
+import { Recipe} from "@/browser/recipe";
 import RecipeSteps, {ADD_RECIPE_STEPS, RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
-import { serverPort } from "@/server/config/configuration";
+import { serverPort } from "@/browser/configuration";
 
 export const RECIPE_FORM_NAMESPACE = 'recipes/recipeForm'
 export const ADD_RECIPE = 'addRecipe';

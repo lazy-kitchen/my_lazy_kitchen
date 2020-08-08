@@ -35,7 +35,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { serverPort } from "@/server/config/configuration";
+    import { serverPort } from "@/browser/configuration";
     import FormErrors from '@/client/components/FormErrors.vue';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
     import {
@@ -45,7 +45,8 @@
     } from "@/client/store/modules/forms/recipe_steps";
     import RemovedSteps from "@/client/components/recipes/recipe_steps/RemovedSteps.vue";
     import {mapGetters} from "vuex";
-    import Recipe from "@/server/db/models/recipe";
+    import { Recipe} from "@/browser/recipe";
+
 
     export default Vue.extend({
         name: 'recipe-form',
@@ -138,20 +139,23 @@
                     const recipePayload = {
                         id: this.recipe.id,
                         name: this.recipe.name,
+                        slug: this.recipe.slug,
                         description: this.recipe.description,
                         completionTime: this.recipe.completionTime,
-                        steps: {
+                    };
+
+                    const stepsPayload = {
                             createdSteps: this.createdSteps,
                             updatedSteps: this.updatedSteps,
                             removedSteps: this.removedSteps
-                        }
-                    }
+                    };
 
                     const response = await fetch(this.targetUrl, {
                         method: this.formMethod,
                         headers: headers,
                         body: JSON.stringify({
-                            recipe: recipePayload
+                            recipe: recipePayload,
+                            steps: stepsPayload
                         })
                     });
 

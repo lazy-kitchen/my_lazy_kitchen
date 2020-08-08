@@ -9,8 +9,8 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import Ingredient from '@/server/db/models/ingredient';
-    import { serverPort } from "@/server/config/configuration";
+    import { Ingredient } from "@/browser/ingredient";
+    import { serverPort } from "@/browser/configuration";
 
     export default Vue.extend({
         name: 'ingredients-list',

@@ -10,13 +10,7 @@ import {
     NotFoundHandler
 } from './middleware/error';
 import { corsOrigin} from './config/configuration';
-import Knex from "knex";
-import {Model} from "objection";
-import {dbInfo} from "./db/database";
-
-// set up database connection
-const knex = Knex(dbInfo);
-Model.knex(knex);
+import { connection } from "./db/database";
 
 const app = express();
 
@@ -25,6 +19,10 @@ export const logging = new Logging();
 app.use(logging.requestLogger);
 // set up global reference core logger for manual logging
 app.set('logger', logging.logger);
+// set up global reference to main database connection
+connection.then((conn) => {
+    app.set('db_connection', conn);
+})
 
 app.use(methodOverride('X-HTTP-Method-Override'))
 app.use(cors({

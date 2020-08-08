@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { createServer } from 'http';
 import { normalizedPort } from '../utility/http';
 

@@ -30,7 +30,7 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {serverPort} from "@/server/config/configuration";
+    import { serverPort } from "@/browser/configuration";
 
     export default Vue.extend({
         name: "show-recipe",

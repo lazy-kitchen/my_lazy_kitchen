@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
     "outDir": "dist/",
+    // es5
     "target": "esnext",
-    // TODO use esnext when TS supports NodeJS
-    "module": "commonjs",
+     "module": "commonjs",
+//    "module": "esnext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "baseUrl": ".",
     "types": [
       "webpack-env",
@@ -26,8 +25,13 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost"
-    ]
+      "scripthost",
+      "ES5",
+      "ES6"
+    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
   },
   "include": [
     "src/**/*.ts",

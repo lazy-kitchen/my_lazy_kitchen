@@ -1,11 +1,14 @@
 import express from 'express';
 import { handleHttpError } from '../utility/http';
-import Recipe from '../db/models/recipe';
-import RecipeStep from "@/server/db/models/recipe_step";
+import Recipe from '../db/entity/recipe';
+import { connection } from "../db/database";
+import Step from "../db/entity/step";
 
 export const index = async (_req: express.Request, res: express.Response) => {
     try {
-        const recipes: Array<Recipe> = await Recipe.query();
+        const recipes: Array<Recipe> = await Recipe.Repo().createQueryBuilder()
+            .getMany();
+
         res.status(200)
             .json({
                 recipes: recipes
@@ -17,9 +20,9 @@ export const index = async (_req: express.Request, res: express.Response) => {
 
 export const show = async(req: express.Request, res: express.Response) => {
     try {
-        const recipe: Recipe = await Recipe.query().findOne({
-            slug: req.params.id
-        }).withGraphFetched('steps');
+        const recipe = await Recipe.Repo().findOne({
+            slug: req.params.id,
+        });
 
         res.status(200)
             .json({
@@ -32,7 +35,11 @@ export const show = async(req: express.Request, res: express.Response) => {
 
 export const create = async (req: express.Request, res: express.Response) => {
     try {
-        const recipe = await Recipe.query().insert(req.body.recipe);
+        const recipe = await Recipe.Repo().create(
+            req.body.recipe as Recipe
+        );
+        await Recipe.Repo().save(recipe);
+
         res.status(201)
             .json({
                 recipe: recipe
@@ -48,8 +55,21 @@ export const create = async (req: express.Request, res: express.Response) => {
 
 export const update = async(req: express.Request, res: express.Response) => {
     try {
-        // const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
-        const recipe = await Recipe.fullUpdate(req.body.recipe);
+        const recipe = await Recipe.Repo().create(
+            req.body.recipe as Recipe
+        );
+
+        const dbConnectedSteps: StepsPayload = {
+            createdSteps: req.body.steps.createdSteps,
+            updatedSteps: req.body.steps.updatedSteps,
+            removedSteps: req.body.steps.removedSteps
+        };
+
+        await Recipe.updateAll(
+            recipe,
+            dbConnectedSteps
+        );
+
         res.status(200)
             .json({
                 recipe: recipe
@@ -63,10 +83,8 @@ export const update = async(req: express.Request, res: express.Response) => {
     }
 };
 
-export interface RecipePayload extends Recipe{
-    steps: {
-        createdSteps?: Array<RecipeStep>;
-        updatedSteps?: Array<RecipeStep>;
-        removedSteps?: Array<RecipeStep>;
-    }
+export interface StepsPayload {
+    createdSteps?: Array<Step>;
+    updatedSteps?: Array<Step>;
+    removedSteps?: Array<Step >;
 }

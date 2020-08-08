@@ -1,9 +1,9 @@
-const environment: string = process.env.NODE_ENV || 'development';
-const configuration = require('./knexfile');
+import { createConnection } from "typeorm";
+import { connectionSettings } from "./ormconfig";
 
-if (!(environment in configuration)) {
-    throw new Error(`Unknown environment: ${environment}`)
-}
+export const connection = createConnection(connectionSettings);
 
-export const dbInfo = configuration[environment];
-
+export const manager = async () => {
+    const conn = await connection;
+    return conn.manager;
+};

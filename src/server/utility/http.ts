@@ -8,7 +8,7 @@ import express from 'express';
  */
 import { HTTPError } from '../utility/error';
 
-export const normalizedPort = (portVal: any) => {
+export const normalizedPort = (portVal: string) => {
   const port = parseInt(portVal, 10);
   if (isNaN(port)) {
       // named pipe

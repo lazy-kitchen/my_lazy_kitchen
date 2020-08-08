@@ -17,20 +17,24 @@
     import Vue from 'vue';
     import RecipeStep from '@/client/components/recipes/recipe_steps/RecipeStep.vue';
     import store from "@/client/store";
-    import {mapMutations} from "vuex";
+    import {mapMutations, mapState} from "vuex";
     import {
         ADD_RECIPE_STEP,
         RECIPE_STEPS_NAMESPACE,
         UPDATE_RECIPE_STEPS
     } from "@/client/store/modules/forms/recipe_steps";
     import draggable from 'vuedraggable'
-    import Step from '@/server/db/models/recipe_step';
+    import { Step } from "@/browser/step";
+    import {RECIPE_FORM_NAMESPACE} from "@/client/store/modules/forms/recipe_form";
 
 
     export default Vue.extend({
         name: "steps",
         components: {RecipeStep, draggable},
         computed: {
+            ...mapState(RECIPE_FORM_NAMESPACE, [
+                'recipe'
+            ]),
             steps: {
                 get(): Array<Step> {
                     return this.$store.state.recipes.recipeForm.recipe.steps;
@@ -49,10 +53,13 @@
             addStep: function () {
                 const stepUniqueId = new Date().getTime();
 
-                store.commit(`${RECIPE_STEPS_NAMESPACE}/${ADD_RECIPE_STEP}`, stepUniqueId);
+                store.commit(`${RECIPE_STEPS_NAMESPACE}/${ADD_RECIPE_STEP}`, {
+                    recipeStepId: stepUniqueId,
+                    recipeId: parseInt(this.recipe.id)
+                });
                 // whenever a new step is added, steps (order) should be recalculated
                 store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEPS}`, {
-                    steps: this.steps
+                    steps: this.steps,
                 });
             }
         }

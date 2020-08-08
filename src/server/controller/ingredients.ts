@@ -1,10 +1,13 @@
 import express from 'express';
 import { handleHttpError } from '../utility/http';
-import Ingredient from '../db/models/ingredient';
+import Ingredient from '../db/entity/ingredient';
+
 
 export const index = async (_req: express.Request, res: express.Response) => {
     try {
-        const ingredients: Array<Ingredient> = await Ingredient.query();
+        const ingredients: Array<Ingredient> = await Ingredient.Repo().createQueryBuilder()
+            .getMany();
+
         res.status(200)
             .json({
                 ingredients: ingredients
@@ -16,7 +19,7 @@ export const index = async (_req: express.Request, res: express.Response) => {
 
 export const show = async(req: express.Request, res: express.Response) => {
     try {
-        const ingredient: Ingredient = await Ingredient.query().findOne({
+        const ingredient = await Ingredient.Repo().findOne({
             slug: req.params.id
         });
 
@@ -31,7 +34,11 @@ export const show = async(req: express.Request, res: express.Response) => {
 
 export const create = async (req: express.Request, res: express.Response) => {
     try {
-        const ingredient = await Ingredient.query().insert(req.body.ingredient);
+        const ingredient = await Ingredient.Repo().create(
+            req.body.ingredient as Ingredient
+        );
+        await Ingredient.Repo().save(ingredient);
+
         res.status(201)
             .json({
                 ingredient: ingredient
@@ -47,7 +54,14 @@ export const create = async (req: express.Request, res: express.Response) => {
 
 export const update = async(req: express.Request, res: express.Response) => {
     try {
-        const ingredient = await Ingredient.query().updateAndFetchById(req.body.ingredient.id, req.body.ingredient);
+        const ingredient = await Ingredient.Repo().create(
+            req.body.ingredient as Ingredient
+        );
+        await Ingredient.Repo().update(
+            ingredient.id,
+            ingredient
+        );
+
         res.status(200)
             .json({
                 ingredient: ingredient

@@ -13,7 +13,7 @@
     import Vue from 'vue';
 
     import IngredientForm from '@/client/components/ingredients/Form.vue';
-    import {serverPort} from "@/server/config/configuration";
+    import { serverPort } from "@/browser/configuration";
 
     export default Vue.extend({
         name: "edit-ingredient",

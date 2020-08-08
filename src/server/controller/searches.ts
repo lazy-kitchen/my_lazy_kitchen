@@ -1,6 +1,6 @@
 import express from 'express';
-import Ingredient from "../db/models/ingredient";
-import {handleHttpError} from "../utility/http";
+import { handleHttpError } from "../utility/http";
+import Ingredient from "../db/entity/ingredient";
 
 export const index = async (req: express.Request, res: express.Response) => {
     try {

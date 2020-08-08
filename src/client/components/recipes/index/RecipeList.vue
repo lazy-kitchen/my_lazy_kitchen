@@ -9,8 +9,8 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import Recipe from '@/server/db/models/recipe';
-    import { serverPort } from "@/server/config/configuration";
+    import { Recipe } from "@/browser/recipe";
+    import { serverPort } from "@/browser/configuration";
 
     export default Vue.extend({
         name: 'recipes-list',
