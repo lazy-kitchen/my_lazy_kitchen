@@ -138,20 +138,24 @@
                     const recipePayload = {
                         id: this.recipe.id,
                         name: this.recipe.name,
+                        slug: this.recipe.slug,
                         description: this.recipe.description,
                         completionTime: this.recipe.completionTime,
-                        steps: {
-                            createdSteps: this.createdSteps,
-                            updatedSteps: this.updatedSteps,
-                            removedSteps: this.removedSteps
-                        }
+
+                    };
+
+                    const stepsPayload = {
+                        createdSteps: this.createdSteps,
+                        updatedSteps: this.updatedSteps,
+                        removedSteps: this.removedSteps
                     }
 
                     const response = await fetch(this.targetUrl, {
                         method: this.formMethod,
                         headers: headers,
                         body: JSON.stringify({
-                            recipe: recipePayload
+                            recipe: recipePayload,
+                            steps: stepsPayload
                         })
                     });
 

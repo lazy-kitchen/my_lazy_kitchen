@@ -5,11 +5,16 @@
                v-bind:name="uniqueIdentifier('id')"
                v-model.number="recipeStep.id" />
         <input type="hidden"
-               v-bind:aria-label=stepNumberLabel
+               v-bind:aria-label=orderLabel
                class="form-control"
-               v-bind:id="uniqueIdentifier('step_number')"
-               v-bind:name="uniqueIdentifier('step_number')"
-               v-model.number="recipeStep.stepNumber" />
+               v-bind:id="uniqueIdentifier('order')"
+               v-bind:name="uniqueIdentifier('order')"
+               v-model.number="recipeStep.order" />
+        <input type="hidden"
+               v-bind:id="uniqueIdentifier('recipeId')"
+               v-bind:name="uniqueIdentifier('recipeId')"
+               v-model.number="this.recipe.id"
+        />
         <p v-bind:aria-label=instructionLabel
            class="form-control"
            v-bind:id="uniqueIdentifier('instruction')"
@@ -42,9 +47,10 @@
     import {
         RECIPE_STEPS_NAMESPACE,
         REMOVE_RECIPE_STEP,
-        StepAction, UNDO_REMOVE_RECIPE_STEP,
+        UNDO_REMOVE_RECIPE_STEP,
         UPDATE_RECIPE_STEP
     } from "@/client/store/modules/forms/recipe_steps";
+    import { Action } from "@/client/store/modules/forms/recipe_steps";
 
     export default Vue.extend({
         // Note that state in this component is local, changes made are not reflected in vuex until submission
@@ -63,11 +69,11 @@
         },
         computed: {
             instruction: {
-                get() {
+                get(): string {
                     // Note that this assumes that this is linked to vuex-backed property
                     return this.recipeStep.instruction;
                 },
-                set(value) {
+                set(value: string) {
                     this.$store.commit(`${RECIPE_STEPS_NAMESPACE}/${UPDATE_RECIPE_STEP}`, {
                         recipeStepId: this.storeIdentifier,
                         property: 'instruction',
@@ -75,11 +81,11 @@
                     });
                 }
             },
-            stepNumberLabel: function(): string {
-                return `Recipe Step Number ${this.recipeStep.stepNumber}`;
+            orderLabel: function(): string {
+                return `Recipe Step Number ${this.recipeStep.order}`;
             },
             instructionLabel: function(): string {
-                return `Recipe Instruction ${this.recipeStep.stepNumber}`;
+                return `Recipe Instruction ${this.recipeStep.order}`;
             },
             // If RecipeStep already existed, then it will be accessible in store by its primary key id.
             // However, if it does not already exist,
@@ -88,7 +94,7 @@
                 return this.recipeStep.id || this.uniqueId;
             },
             removable: function (): boolean {
-                return this.recipeStep.action === StepAction.Remove
+                return this.recipeStep.action === Action.Remove
             }
         },
         methods: {

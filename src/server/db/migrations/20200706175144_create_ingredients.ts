@@ -2,19 +2,24 @@ import * as Knex from "knex";
 
 
 export async function up(knex: Knex): Promise<any> {
-    return knex.schema.createTable('ingredients', table => {
+    await knex.schema.createTable('ingredients', table => {
         table.bigIncrements('id').primary();
 
-        table.string('name').notNullable().unique();
-        table.string('slug').notNullable().unique();
+        table.string('name').notNullable();
+        table.string('slug').notNullable();
         table.text('description');
 
-        table.timestamps();
+        table.timestamps(true, true);
+    });
+
+    await knex.schema.alterTable('ingredients', table => {
+        table.unique(['name']);
+        table.unique(['slug']);
     });
 }
 
 
 export async function down(knex: Knex): Promise<any> {
-    return knex.schema.dropTable('ingredients');
+    await knex.schema.dropTable('ingredients');
 }
 

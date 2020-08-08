@@ -2,22 +2,22 @@ import { Model } from 'objection';
 import Recipe from "./recipe";
 import Ingredient from "./ingredient";
 import Application from "./application";
-import {StepAction} from "@/client/store/modules/forms/recipe_steps";
+import {Action} from "../../../client/store/modules/forms/recipe_steps";
 
-export default class RecipeStep extends Application {
+export default class Step extends Application {
     id!: number;
     stepNumber!: number;
     instruction!: string;
-    action?: StepAction
+    action?: Action
 
-    static tableName = 'recipe_steps';
+    static tableName = 'steps';
 
     static relationMappings = {
         recipe: {
             relation: Model.BelongsToOneRelation,
             modelClass: Recipe,
             join: {
-                from: 'recipe_steps.recipe_id',
+                from: 'steps.recipe_id',
                 to: 'recipes.id'
             }
         },
@@ -25,10 +25,10 @@ export default class RecipeStep extends Application {
             relation: Model.HasOneThroughRelation,
             modelClass: Ingredient,
             join: {
-                from: 'recipe_steps.id',
+                from: 'steps.id',
                 through: {
-                    from: 'recipe_steps_ingredients.recipe_step_id',
-                    to: 'recipe_steps_ingredients.ingredient_id'
+                    from: 'steps_ingredients.step_id',
+                    to: 'steps_ingredients.ingredient_id'
                 },
                 to: 'ingredient_id'
             }

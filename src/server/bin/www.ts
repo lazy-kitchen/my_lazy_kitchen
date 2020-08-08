@@ -7,7 +7,7 @@ import { serverPort } from '../config/configuration'
 import application from '../application';
 
 // Set port for server to listen on
-const port = normalizedPort(process.env.PORT || serverPort);
+const port = normalizedPort(serverPort);
 application.set('port', port);
 
 // Set up HTTP server

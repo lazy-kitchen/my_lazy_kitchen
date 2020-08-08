@@ -1,7 +1,7 @@
 import express from 'express';
 import { handleHttpError } from '../utility/http';
 import Recipe from '../db/models/recipe';
-import RecipeStep from "@/server/db/models/recipe_step";
+import Step from "@/server/db/models/step";
 
 export const index = async (_req: express.Request, res: express.Response) => {
     try {
@@ -65,8 +65,8 @@ export const update = async(req: express.Request, res: express.Response) => {
 
 export interface RecipePayload extends Recipe{
     steps: {
-        createdSteps?: Array<RecipeStep>;
-        updatedSteps?: Array<RecipeStep>;
-        removedSteps?: Array<RecipeStep>;
+        createdSteps?: Array<Step>;
+        updatedSteps?: Array<Step>;
+        removedSteps?: Array<Step>;
     }
 }

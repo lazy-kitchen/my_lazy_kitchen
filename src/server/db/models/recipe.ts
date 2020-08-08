@@ -1,5 +1,5 @@
 import { Model } from "objection";
-import RecipeStep from "./recipe_step";
+import Step from "./step";
 import { slugifyIdName } from "../../utility/slug";
 import Application from "./application";
 import {RecipePayload} from "@/server/controller/recipes";
@@ -17,10 +17,10 @@ export default class Recipe extends Application {
         return {
             steps: {
                 relation: Model.HasManyRelation,
-                modelClass: RecipeStep,
+                modelClass: Step,
                 join: {
                     from: 'recipes.id',
-                    to: 'recipe_steps.recipe_id'
+                    to: 'steps.recipe_id'
                 }
             }
         }
@@ -51,7 +51,7 @@ export default class Recipe extends Application {
     static async fullUpdate(recipe: RecipePayload) {
         const recipeTrx = await Recipe.startTransaction();
         try {
-            const recipeStepTrx = await RecipeStep.startTransaction();
+            const recipeStepTrx = await Step.startTransaction();
             try {
 
                 if (recipe.steps.createdSteps) {
