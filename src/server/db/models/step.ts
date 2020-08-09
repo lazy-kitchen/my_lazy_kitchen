@@ -40,12 +40,12 @@ export default class Step extends Application {
 
     static jsonSchema = {
         type: 'object',
-        required: ['order', 'instruction', 'recipeId'],
+        required: ['order', 'instruction'],
         properties: {
             id: { type: 'integer' },
             order: { type: 'integer' },
             instruction: { type: 'string', maxLength: 1000 },
-            recipeId: {type: 'bigint'}
+            recipeId: {type: 'integer'}
         }
     }
 }
