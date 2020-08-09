@@ -66,14 +66,12 @@ const RecipeSteps = {
             Vue.set(state, 'steps', recipeSteps);
         },
         // meant to add new recipe step from form, basically pre-reserve space
-        addRecipeStep(state: RecipeStepsState, {recipeStepId, recipeId}: {recipeStepId: number; recipeId: number}) {
+        addRecipeStep(state: RecipeStepsState, {recipeStepId, recipeId}: {recipeStepId: string; recipeId: string}) {
             const newStep = {
                 id: recipeStepId,
                 action: Action.Create,
                 order: -1,
                 instruction: '',
-                createdAt: null,
-                updatedAt: null,
                 recipeId: recipeId
             } as unknown as Step;
 

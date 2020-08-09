@@ -1,6 +1,25 @@
 // Update with your config settings.
 // @note Run with -x ts to support TypeScript in migration files
 // @note Run with --esm to support module imports/exports in migration files
+
+// TODO Due to historical lack of full support for BigInt in JS, the solution has involved dealing with these values as strings
+//  However, assumptions are made that the values being passed around should be numbers. Therefore, the string values that
+//  are parsed out of the db response, need to be converted to a numeric value, by altering the behavior of their type parsers.
+//  While unfortunately this will cause a lack of precision for large numbers/decimals, as the numbers are converted to something
+//  that is understood by the parse functions, at the moment, since these numbers are unlikely to be reached any time soon,
+//  it was decided to use the parsers.
+//  When FULL support for bigint/numeric in all relevant language, driver, and ORM libraries is available, these parsers will not
+//  be needed, and so should be removed.
+const pg = require('pg');
+// bigint
+pg.types.setTypeParser(20, (value: string) => {
+  return parseInt(value);
+});
+// float
+pg.types.setTypeParser(1700, (value: string) => {
+  return parseFloat(value);
+});
+
 import { resolve } from 'path';
 
 module.exports = {

@@ -2,7 +2,7 @@
     <div class="form-container">
         <h1>{{headerText}}</h1>
         <form v-on:submit.prevent="onSubmit" v-bind:action="formAction" id="recipe_form" v-bind:method="formMethod">
-            <input type="hidden" id="id" name="id" v-model="recipe.id" />
+            <input type="hidden" id="id" name="id" v-model.number="recipe.id" />
 
             <div class="form-group">
                 <label for="name" class="form-control-lbl">Name</label>

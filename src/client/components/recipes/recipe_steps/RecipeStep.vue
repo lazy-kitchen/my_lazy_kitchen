@@ -43,7 +43,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import {mapActions} from "vuex";
+    import {mapActions, mapState} from "vuex";
     import {
         RECIPE_STEPS_NAMESPACE,
         REMOVE_RECIPE_STEP,
@@ -51,6 +51,7 @@
         UPDATE_RECIPE_STEP
     } from "@/client/store/modules/forms/recipe_steps";
     import { Action } from "@/client/store/modules/forms/recipe_steps";
+    import {RECIPE_FORM_NAMESPACE} from "@/client/store/modules/forms/recipe_form";
 
     export default Vue.extend({
         // Note that state in this component is local, changes made are not reflected in vuex until submission
@@ -68,6 +69,9 @@
             }
         },
         computed: {
+            ...mapState(RECIPE_FORM_NAMESPACE, [
+               'recipe'
+            ]),
             instruction: {
                 get(): string {
                     // Note that this assumes that this is linked to vuex-backed property

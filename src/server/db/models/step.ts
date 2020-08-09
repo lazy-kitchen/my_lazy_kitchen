@@ -6,9 +6,14 @@ import {Action} from "../../../client/store/modules/forms/recipe_steps";
 
 export default class Step extends Application {
     id!: number;
-    stepNumber!: number;
+    order!: number;
     instruction!: string;
-    action?: Action
+
+    static get virtualAttributes() {
+        return ['action']
+    }
+
+    set action(_: Action) {}
 
     static tableName = 'steps';
 
@@ -37,10 +42,10 @@ export default class Step extends Application {
 
     static jsonSchema = {
         type: 'object',
-        required: ['stepNumber', 'instruction'],
+        required: ['order', 'instruction'],
         properties: {
             id: { type: 'integer' },
-            stepNumber: { type: 'integer' },
+            order: { type: 'integer' },
             instruction: { type: 'string', maxLength: 1000 }
         }
     }

@@ -1,4 +1,4 @@
-import { Model } from "objection";
+import {Model, PartialModelObject} from "objection";
 import Step from "./step";
 import { slugifyIdName } from "../../utility/slug";
 import Application from "./application";
@@ -48,38 +48,45 @@ export default class Recipe extends Application {
         this.slug = slugifyIdName(this.name);
     }
 
-    static async fullUpdate(recipe: RecipePayload) {
+    static async updateAll(recipe: Recipe, steps: RecipePayload) {
         const recipeTrx = await Recipe.startTransaction();
         try {
             const recipeStepTrx = await Step.startTransaction();
             try {
-
-                if (recipe.steps.createdSteps) {
-                    for (let createStep of recipe.steps.createdSteps) {
-                        delete createStep.action;
+                if (steps.createdSteps) {
+                    for (let createStep of steps.createdSteps) {
+                        // delete createStep.action;
+                        // if (!createStep.updatedAt) {
+                        //     delete createStep.updatedAt;
+                        // }
                         await Recipe.relatedQuery('steps')
                             .for(recipe.id)
                             .insert(createStep);
                     }
                 }
 
-                if (recipe.steps.updatedSteps) {
-                    for (let updateStep of recipe.steps.updatedSteps) {
-                        delete updateStep.action;
+                if (steps.updatedSteps) {
+                    for (let updateStep of steps.updatedSteps) {
+                        const change: PartialModelObject<Step> = {
+                            instruction: updateStep.instruction,
+                            order: updateStep.order,
+
+                        };
                         await Recipe.relatedQuery('steps')
                             .for(recipe.id)
-                            .patch(updateStep);
+                            .patch(change)
+                            .where('id', updateStep.id);
                     }
                 }
 
-                if (recipe.steps.removedSteps) {
-                    for (let updateStep of recipe.steps.removedSteps) {
+                if (steps.removedSteps) {
+                    for (let updateStep of steps.removedSteps) {
                         await Recipe.relatedQuery('steps')
                             .for(recipe.id)
                             .delete()
                             .whereIn(
                                 'id',
-                                recipe.steps.removedSteps.map((step) => {return step.id;})
+                                steps.removedSteps.map((step) => {return step.id;})
                             );
                     }
                 }
