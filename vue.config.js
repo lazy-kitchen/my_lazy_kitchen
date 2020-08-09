@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   configureWebpack: {
@@ -10,7 +11,10 @@ module.exports = {
     },
     entry: {
       app: path.join(__dirname, 'src', 'client', 'main.ts')
-    }
+    },
+    plugins: [
+      // new BundleAnalyzerPlugin()
+    ]
   },
   chainWebpack: config => {
     config.plugin('html')

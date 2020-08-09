@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, {StoreOptions} from 'vuex'
 import { Recipes } from "@/client/store/modules/recipes";
 
 Vue.use(Vuex)
 
-const options: any = {
+const options: StoreOptions<object> = {
   state: {
   },
   mutations: {

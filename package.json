@@ -53,6 +53,7 @@
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.52",
     "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }
