@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Recipe from "@/server/db/models/recipe";
 import RecipeSteps, {ADD_RECIPE_STEPS, RECIPE_STEPS_NAMESPACE} from "@/client/store/modules/forms/recipe_steps";
 import { serverPort } from "@/server/config/configuration";
+import {Commit} from "vuex";
 
 export const RECIPE_FORM_NAMESPACE = 'recipes/recipeForm'
 export const ADD_RECIPE = 'addRecipe';
@@ -27,9 +28,6 @@ const RecipeForm = {
 
             Vue.set(state, 'recipe', newState);
         },
-        updateRecipe(state: RecipeFormState, {property, value}: {property: string; value: any}) {
-            Vue.set(state.recipe, property, value);
-        },
         addRecipeError(state: RecipeFormState, errorMessage: string) {
             const newState = [...state.errors, errorMessage];
 
@@ -37,7 +35,7 @@ const RecipeForm = {
         }
     },
     actions: {
-        async getRecipe({commit}: {commit: any}, {routeId}: {routeId: string}) {
+        async getRecipe({commit}: {commit: Commit}, {routeId}: {routeId: string}) {
             try {
                 // TODO update url
                 const response = await fetch(`http://localhost:${serverPort}/api/recipes/${routeId}`, {
@@ -63,7 +61,5 @@ const RecipeForm = {
         }
     }
 };
-
-export const UPDATE_RECIPE = 'updateRecipe';
 
 export default RecipeForm;
