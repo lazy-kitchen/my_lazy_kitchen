@@ -50,8 +50,8 @@
         UNDO_REMOVE_RECIPE_STEP,
         UPDATE_RECIPE_STEP
     } from "@/client/store/modules/forms/recipe_steps";
-    import { Action } from "@/client/store/modules/forms/recipe_steps";
     import {RECIPE_FORM_NAMESPACE} from "@/client/store/modules/forms/recipe_form";
+    import {Action} from "@/server/db/models/browser";
 
     export default Vue.extend({
         // Note that state in this component is local, changes made are not reflected in vuex until submission
@@ -102,9 +102,6 @@
             }
         },
         methods: {
-            // ...mapMutations(RECIPE_STEPS_NAMESPACE, [
-            //     'removeRecipeStep'
-            // ]),
             ...mapActions(RECIPE_STEPS_NAMESPACE, {
                 REMOVE_RECIPE_STEP,
                 UNDO_REMOVE_RECIPE_STEP

@@ -22,7 +22,7 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {serverPort} from "@/server/config/configuration";
+    import {serverUrl} from "@/client/configuration";
 
     export default Vue.extend({
         name: "show-ingredient",
@@ -38,8 +38,7 @@
         methods: {
             loadIngredient: async function(id: string) {
                 try {
-                    // TODO update url
-                    const response = await fetch(`http://localhost:${serverPort}/api/ingredients/${id}`, {
+                    const response = await fetch(`${serverUrl}/api/ingredients/${id}`, {
                         headers: {
                             'Content-Type': 'application/json'
                         }

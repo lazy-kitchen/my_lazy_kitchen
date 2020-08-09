@@ -9,8 +9,8 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import Recipe from '@/server/db/models/recipe';
-    import { serverPort } from "@/server/config/configuration";
+    import { Recipe } from "@/server/db/models/browser";
+    import {serverUrl} from "@/client/configuration";
 
     export default Vue.extend({
         name: 'recipes-list',
@@ -22,7 +22,7 @@
         created: async function () {
             try {
                 // TODO update url
-                const response = await fetch(`http://localhost:${serverPort}/api/recipes`, {
+                const response = await fetch(`${serverUrl}/api/recipes`, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

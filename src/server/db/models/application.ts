@@ -8,6 +8,10 @@ export default class Application extends Model {
         return snakeCaseMappers();
     }
 
+    static get pickJsonSchemaProperties() {
+        return true;
+    }
+
     $beforeInsert() {
         this.createdAt = new Date().toISOString();
     }

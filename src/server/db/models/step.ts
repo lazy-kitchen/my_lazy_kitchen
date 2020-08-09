@@ -2,18 +2,16 @@ import { Model } from 'objection';
 import Recipe from "./recipe";
 import Ingredient from "./ingredient";
 import Application from "./application";
-import {Action} from "../../../client/store/modules/forms/recipe_steps";
 
 export default class Step extends Application {
     id!: number;
     order!: number;
     instruction!: string;
+    recipeId!: bigint;
 
     static get virtualAttributes() {
         return ['action']
     }
-
-    set action(_: Action) {}
 
     static tableName = 'steps';
 
@@ -42,11 +40,12 @@ export default class Step extends Application {
 
     static jsonSchema = {
         type: 'object',
-        required: ['order', 'instruction'],
+        required: ['order', 'instruction', 'recipeId'],
         properties: {
             id: { type: 'integer' },
             order: { type: 'integer' },
-            instruction: { type: 'string', maxLength: 1000 }
+            instruction: { type: 'string', maxLength: 1000 },
+            recipeId: {type: 'bigint'}
         }
     }
 }

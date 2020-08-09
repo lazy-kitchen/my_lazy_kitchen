@@ -55,10 +55,6 @@ export default class Recipe extends Application {
             try {
                 if (steps.createdSteps) {
                     for (let createStep of steps.createdSteps) {
-                        // delete createStep.action;
-                        // if (!createStep.updatedAt) {
-                        //     delete createStep.updatedAt;
-                        // }
                         await Recipe.relatedQuery('steps')
                             .for(recipe.id)
                             .insert(createStep);
@@ -74,7 +70,7 @@ export default class Recipe extends Application {
                         };
                         await Recipe.relatedQuery('steps')
                             .for(recipe.id)
-                            .patch(change)
+                            .update(change)
                             .where('id', updateStep.id);
                     }
                 }

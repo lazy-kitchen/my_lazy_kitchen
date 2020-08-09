@@ -24,7 +24,7 @@
         UPDATE_RECIPE_STEPS
     } from "@/client/store/modules/forms/recipe_steps";
     import draggable from 'vuedraggable'
-    import Step from '@/server/db/models/step';
+    import { Step } from "@/server/db/models/browser";
     import {RECIPE_FORM_NAMESPACE} from "@/client/store/modules/forms/recipe_form";
 
 

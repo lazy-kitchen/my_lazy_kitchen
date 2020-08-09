@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Step from "@/server/db/models/step";
+import {Action, Step} from "@/server/db/models/browser";
 import {Commit} from "vuex";
 
 export const RECIPE_STEPS_NAMESPACE = 'recipes/recipeForm/recipe';
@@ -21,12 +21,6 @@ export const GET_CREATED_STEPS = 'createdSteps';
 export const GET_UPDATED_STEPS = 'updatedSteps';
 export const GET_REMOVED_STEPS = 'removedSteps';
 
-export enum Action {
-    Create = 'Create',
-    Update = 'Update',
-    Remove = 'Remove'
-}
-
 export interface RecipeStepsState {
     steps: Array<Step>;
     removedSteps: Array<Step>;
@@ -42,10 +36,8 @@ const RecipeSteps = {
             return state.steps.filter((step) => {
                 return step.action === Action.Create;
             }).map((step) => {
-                // Not sure how ORM will react if a fake id value, so the be safe it is removed
                 return {
-                    ...step,
-                    id: undefined
+                    ...step
                 };
             });
         },

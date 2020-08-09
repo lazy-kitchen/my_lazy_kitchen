@@ -35,7 +35,6 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { serverPort } from "@/server/config/configuration";
     import FormErrors from '@/client/components/FormErrors.vue';
     import RecipeSteps from '@/client/components/recipes/recipe_steps/Steps.vue';
     import {
@@ -45,7 +44,8 @@
     } from "@/client/store/modules/forms/recipe_steps";
     import RemovedSteps from "@/client/components/recipes/recipe_steps/RemovedSteps.vue";
     import {mapGetters} from "vuex";
-    import Recipe from "@/server/db/models/recipe";
+    import { Recipe} from "@/server/db/models/browser";
+    import {serverUrl} from "@/client/configuration";
 
     export default Vue.extend({
         name: 'recipe-form',
@@ -79,7 +79,7 @@
               }
             },
             targetUrl: function (): string {
-                const targetUrl = new URL(`http://localhost:${serverPort}`);
+                const targetUrl = new URL(`${serverUrl}`);
                 targetUrl.pathname = `/api/${this.formAction}`;
 
                 return targetUrl.toString();

@@ -48,7 +48,6 @@ export const create = async (req: express.Request, res: express.Response) => {
 
 export const update = async(req: express.Request, res: express.Response) => {
     try {
-        // const recipe = await Recipe.query().updateAndFetchById(req.body.recipe.id, req.body.recipe);
         const recipe = await Recipe.updateAll(req.body.recipe, req.body.steps);
         res.status(200)
             .json({
