@@ -8,7 +8,7 @@
 
 <script>
     import Vue from 'vue';
-    import RecipeStep from "./RecipeStep";
+    import RecipeStep from "./Step";
     import {
         RECIPE_STEPS_NAMESPACE,
         REMOVE_RECIPE_STEP,

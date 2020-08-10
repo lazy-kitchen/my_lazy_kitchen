@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import Vuex, {StoreOptions} from 'vuex'
+import Vuex, { StoreOptions } from 'vuex'
 import { Recipes } from "@/client/store/modules/recipes";
+import { Modal } from "@/client/store/modules/modal";
 
 Vue.use(Vuex)
 
@@ -15,6 +16,10 @@ const options: StoreOptions<object> = {
     recipes: {
       namespaced: true,
       ...Recipes
+    },
+    modal: {
+      namespaced: true,
+      ...Modal
     }
   }
 };

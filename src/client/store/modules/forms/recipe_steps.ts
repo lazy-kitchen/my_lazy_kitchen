@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import {Action, Step} from "@/server/db/models/browser";
 import {Commit} from "vuex";
+import {CLOSE_MODAL, MODAL_NAMESPACE, OPEN_MODAL} from "@/client/store/modules/modal";
 
 export const RECIPE_STEPS_NAMESPACE = 'recipes/recipeForm/recipe';
 
@@ -16,6 +17,10 @@ export const REMOVE_STEP = 'removeStep';
 export const UNDO_REMOVE_RECIPE_STEP = 'undoRemoveRecipeStep';
 export const UNDO_REMOVE_STEP = 'undoRemoveStep';
 export const REMOVE_REMOVED_STEP = 'removeRemovedStep';
+export const SUBMIT_EDIT_RECIPE_STEP = 'submitEditRecipeStep';
+export const OPEN_EDIT_STEP = 'openEditStep';
+export const LOAD_EDIT_STEP = 'loadEditStep';
+export const UPDATE_EDIT_STEP = 'updateEditStep';
 
 export const GET_CREATED_STEPS = 'createdSteps';
 export const GET_UPDATED_STEPS = 'updatedSteps';
@@ -23,13 +28,18 @@ export const GET_REMOVED_STEPS = 'removedSteps';
 
 export interface RecipeStepsState {
     steps: Array<Step>;
+    editStep: Step;
     removedSteps: Array<Step>;
 }
 
 const RecipeSteps = {
     state: () => ({
         steps: [],
-        removedSteps: []
+        removedSteps: [],
+        editStep: {},
+        modal: {
+            displayModal: false
+        }
     }),
     getters: {
         createdSteps: (state: RecipeStepsState) => {
@@ -160,14 +170,13 @@ const RecipeSteps = {
             });
             Vue.set(state, 'steps', sortedUpdateSteps);
         },
-
-        updateRecipeStep(state: RecipeStepsState, {recipeStepId, property, value}: {recipeStepId: number; property: string; value: string | boolean | number}) {
+        updateRecipeStep(state: RecipeStepsState, {stepId, newStep}: {stepId: number; newStep: Step}) {
             const currentStepStatePosition: number = state.steps.findIndex((step) => {
-                return step.id === recipeStepId;
+                return step.id === stepId;
             });
 
             if (currentStepStatePosition < 0) {
-                console.error(`Recipe step not found with identifier: ${recipeStepId}`);
+                console.error(`Recipe step not found with identifier: ${stepId}`);
                 return;
             }
 
@@ -181,11 +190,32 @@ const RecipeSteps = {
             const newStepState = {
                 ...currentStepState,
                 action: newStepAction,
+                ...newStep
+            } as Step;
+
+            state.steps.splice(currentStepStatePosition, 1, newStepState);
+        },
+        loadEditStep(state: RecipeStepsState, {step}: {step: Step}) {
+            const editStep = {
+                ...step
+            };
+            Vue.set(state, 'editStep', editStep);
+        },
+        updateEditStep(state: RecipeStepsState, {property, value}: {property: string; value: string | boolean | number}) {
+            const currentStepState = state.editStep;
+
+            let newStepAction = currentStepState.action;
+            if (currentStepState.action !== Action.Create) {
+                newStepAction = Action.Update;
+            }
+
+            const newStepState = {
+                ...currentStepState,
+                action: newStepAction,
                 [property]: value
             } as Step;
 
-            // Vue.splice(state.steps, recipeStepId, newStepState);
-            state.steps.splice(currentStepStatePosition, 1, newStepState);
+            Vue.set(newStepState, 'editStep', newStepState);
         }
     },
     actions: {
@@ -203,7 +233,20 @@ const RecipeSteps = {
                 steps: state.steps
             });
 
-        }
+        },
+        submitEditRecipeStep({commit, state}: {commit: Commit; state: RecipeStepsState}) {
+            commit(UPDATE_RECIPE_STEP, {
+                stepId: state.editStep.id,
+                newStep: state.editStep
+            });
+            commit(`${MODAL_NAMESPACE}/${CLOSE_MODAL}`, {}, {root: true});
+        },
+        openEditStep({commit}: {commit: Commit}, {step}: {step: Step}) {
+            commit(LOAD_EDIT_STEP, {
+                step: step
+            });
+            commit(`${MODAL_NAMESPACE}/${OPEN_MODAL}`, {}, {root: true});
+        },
     }
 };
 

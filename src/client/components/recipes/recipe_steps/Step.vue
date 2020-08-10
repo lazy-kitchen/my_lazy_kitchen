@@ -1,43 +1,45 @@
 <template>
     <li class="recipe-step-container" >
         <input type="hidden"
+               v-bind:id="uniqueIdentifier('recipe_id')"
+               v-bind:name="uniqueIdentifier('recipe_id')"
+               v-model.number="this.recipe.id"
+        />
+        <input type="hidden"
                v-bind:id="uniqueIdentifier('id')"
                v-bind:name="uniqueIdentifier('id')"
-               v-model.number="recipeStep.id" />
+               v-model.number="recipeStep.id"
+        />
         <input type="hidden"
-               v-bind:aria-label=orderLabel
-               class="form-control"
                v-bind:id="uniqueIdentifier('order')"
                v-bind:name="uniqueIdentifier('order')"
-               v-model.number="recipeStep.order" />
-        <input type="hidden"
-               v-bind:id="uniqueIdentifier('recipeId')"
-               v-bind:name="uniqueIdentifier('recipeId')"
-               v-model.number="this.recipe.id"
+               v-model.number="recipeStep.order"
         />
         <p v-bind:aria-label=instructionLabel
            class="form-control"
            v-bind:id="uniqueIdentifier('instruction')"
            v-bind:name="uniqueIdentifier('instruction')"
-           v-if="this.removable">
+        >
             {{ this.recipeStep.instruction }}
         </p>
-        <textarea v-bind:aria-label=instructionLabel
-                  class="form-control"
-                  v-bind:id="uniqueIdentifier('instruction')"
-                  v-bind:name="uniqueIdentifier('instruction')"
-                  v-model.trim="instruction"
-                  v-else />
         <button id="undo_remove_recipe_step_btn"
                 class="undo-remove-step"
                 type="button"
                 @click="undoRemoveStep(storeIdentifier)"
-                v-if="this.removable">+</button>
-        <button id="remove_recipe_step_btn"
-                class="remove-step"
-                type="button"
-                @click="removeStep(storeIdentifier)"
-                v-else>X</button>
+                v-if="this.removable"
+        >+</button>
+        <div class="editable-step-btns-container" v-else>
+            <button id="remove_recipe_step_btn"
+                    class="remove-step"
+                    type="button"
+                    @click="removeStep(storeIdentifier)"
+            >X</button>
+            <button id="edit_recipe_step_btn"
+                    class="edit-step"
+                    type="button"
+                    @click="editStep"
+            >Edit</button>
+        </div>
     </li>
 </template>
 
@@ -45,6 +47,7 @@
     import Vue from 'vue';
     import {mapActions, mapState} from "vuex";
     import {
+        OPEN_EDIT_STEP,
         RECIPE_STEPS_NAMESPACE,
         REMOVE_RECIPE_STEP,
         UNDO_REMOVE_RECIPE_STEP,
@@ -85,9 +88,6 @@
                     });
                 }
             },
-            orderLabel: function(): string {
-                return `Recipe Step Number ${this.recipeStep.order}`;
-            },
             instructionLabel: function(): string {
                 return `Recipe Instruction ${this.recipeStep.order}`;
             },
@@ -102,10 +102,13 @@
             }
         },
         methods: {
-            ...mapActions(RECIPE_STEPS_NAMESPACE, {
+            ...mapActions(RECIPE_STEPS_NAMESPACE, [
                 REMOVE_RECIPE_STEP,
                 UNDO_REMOVE_RECIPE_STEP
-            }),
+            ]),
+            ...mapActions(RECIPE_STEPS_NAMESPACE, [
+                OPEN_EDIT_STEP
+            ]),
             uniqueIdentifier: function (identifierName: string): string {
                 return `${identifierName}_${this.uniqueId}`;
             },
@@ -118,8 +121,12 @@
                 this.$store.dispatch(`${RECIPE_STEPS_NAMESPACE}/${UNDO_REMOVE_RECIPE_STEP}`, {
                     recipeStep: this.recipeStep
                 });
+            },
+            editStep: function () {
+                this.$store.dispatch(`${RECIPE_STEPS_NAMESPACE}/${OPEN_EDIT_STEP}`, {
+                    step: this.recipeStep
+                });
             }
-
         }
     })
 </script>
