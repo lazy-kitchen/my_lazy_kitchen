@@ -1,5 +1,5 @@
 <template>
-    <li class="recipe-step-container" >
+    <li class="recipe-step-item" >
         <input type="hidden"
                v-bind:id="uniqueIdentifier('recipe_id')"
                v-bind:name="uniqueIdentifier('recipe_id')"
@@ -16,29 +16,39 @@
                v-model.number="recipeStep.order"
         />
         <p v-bind:aria-label=instructionLabel
-           class="form-control"
+           class="instruction-content form-control"
            v-bind:id="uniqueIdentifier('instruction')"
            v-bind:name="uniqueIdentifier('instruction')"
         >
             {{ this.recipeStep.instruction }}
         </p>
-        <button id="undo_remove_recipe_step_btn"
-                class="undo-remove-step"
-                type="button"
-                @click="undoRemoveStep(storeIdentifier)"
-                v-if="this.removable"
-        >+</button>
-        <div class="editable-step-btns-container" v-else>
-            <button id="remove_recipe_step_btn"
-                    class="remove-step"
-                    type="button"
-                    @click="removeStep(storeIdentifier)"
-            >X</button>
-            <button id="edit_recipe_step_btn"
-                    class="edit-step"
-                    type="button"
-                    @click="editStep"
-            >Edit</button>
+        <div class="step-content-right">
+            <figure v-if="!this.removable" class="step-ingredient-img-container">
+                <img src="https://picsum.photos/1000" class='step-ingredient-img' alt="Recipe Step Ingredient" />
+                <figcaption id="instruction_ingredient" class="step-ingredient">
+                    Some Placeholder Text
+                </figcaption>
+            </figure>
+            <div class="step-btns-container">
+                <button id="undo_remove_recipe_step_btn"
+                        class="undo-remove-step"
+                        type="button"
+                        @click="undoRemoveStep(storeIdentifier)"
+                        v-if="this.removable"
+                >+</button>
+                <div class="editable-step-btns-container" v-else>
+                    <button id="remove_recipe_step_btn"
+                            class="remove-step"
+                            type="button"
+                            @click="removeStep(storeIdentifier)"
+                    >X</button>
+                    <button id="edit_recipe_step_btn"
+                            class="edit-step"
+                            type="button"
+                            @click="editStep"
+                    >Edit</button>
+                </div>
+            </div>
         </div>
     </li>
 </template>
@@ -131,6 +141,54 @@
     })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    #steps_container {
+        .recipe-step-item {
+            justify-content: space-evenly;
+        }
+    }
 
+    #removed_recipe_steps_container {
+        .recipe-step-item {
+            justify-content: space-between;
+        }
+    }
+
+    .recipe-step-item {
+        max-width: 100%;
+        padding: 2%;
+        border: 1px solid grey;
+        border-radius: 1%;
+        min-height: 35vh;
+        max-height: 35vh;
+        display: flex;
+        flex-direction: row;
+        /*justify-content: flex-start;*/
+        align-items: center;
+
+        &:hover {
+            box-shadow: 3px 3px 2px #2c3e50;
+        }
+
+        .instruction-content {
+            border: 1px solid grey;
+            min-height: 20vh;
+            max-height: 20vh;
+            min-width: 60%;
+            max-width: 60%;
+            text-align: left;
+            padding: 1%;
+            overflow: auto;
+        }
+
+        .step-ingredient-img-container {
+            max-height: 25vh;
+
+            .step-ingredient-img{
+                max-height: 15vh;
+            }
+
+
+        }
+    }
 </style>

@@ -19,11 +19,11 @@
                 <input type="number" id="completion_time" name="completion_time" class="form-control form-control-num" min="0" v-model.number="recipe.completionTime" />
             </div>
 
-            <div id="recipe_steps_lists" class="form-group">
-                <label for="recipe_steps_container">Instructions</label>
+            <div id="form-group recipe_steps_lists">
+<!--                <label for="recipe_steps_container">Instructions</label>-->
                 <recipe-steps id="recipe_steps_container" />
 
-                <label v-if="this.$store.state.recipes.recipeForm.recipe.removedSteps.length" for="removed_recipe_steps_container">Removed Instructions</label>
+<!--                <label v-if="this.$store.state.recipes.recipeForm.recipe.removedSteps.length" for="removed_recipe_steps_container">Removed Instructions</label>-->
                 <removed-steps id="removed_recipe_steps_container" />
             </div>
 
@@ -196,7 +196,7 @@
         border-radius: 2%;
         box-shadow: 3px 3px 2px #2c3e50;
         min-height: 60vh;
-        width: 50%;
+        width: 70%;
         margin: 0 auto;
         padding: 3%;
 
@@ -223,6 +223,12 @@
 
         .form-control-num {
             width: 20%;
+        }
+
+        #recipe_steps_lists {
+            max-width: 100%;
+            display: flex;
+            flex-direction: row;
         }
     }
 </style>

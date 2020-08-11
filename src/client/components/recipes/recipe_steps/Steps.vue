@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="steps_container">
         <modal v-if="this.displayModal" @close="onSubmit">
             <h3 slot="header">Edit Recipe Step</h3>
             <div slot="body" class="modal-content">
@@ -83,6 +83,20 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    #recipe_steps {
+        list-style: none;
+        padding-left: 0;
+        width: 100%;
+        /*margin: 2% auto;*/
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        border: 1px solid grey;
+    }
 
+    .add-step {
+        align-self: flex-start;
+    }
 </style>
