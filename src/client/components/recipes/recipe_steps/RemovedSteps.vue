@@ -1,6 +1,6 @@
 <template>
     <div v-if="this.steps.length" id="removed_steps_container">
-        <ul id="removed_recipe_steps" ref="removedRecipeStepsLisst">
+        <ul id="removed_recipe_steps" ref="removedRecipeStepsList">
             <recipe-step v-for="step in this.steps" :key="step.id" v-bind:recipe-step="step" />
         </ul>
     </div>
@@ -34,21 +34,18 @@
 </script>
 
 <style scoped lang="scss">
-    #removed_recipe_steps_container {
+    #removed_recipe_steps {
         list-style: none;
         padding-left: 0;
-        width: 100%;
-        /*margin: 2% auto;*/
+        min-width: 90%;
+        max-width: 90%;
+        width: 90%;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         overflow: auto;
-        max-height: 70vh;
+        max-height: 90vh;
         border: 1px solid grey;
-
-        #removed_recipe_steps {
-            padding-left: 0;
-            list-style: none;
-            margin: 0;
-        }
+        border-radius: 2%;
     }
 </style>

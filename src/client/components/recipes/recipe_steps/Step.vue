@@ -176,9 +176,11 @@
             max-height: 20vh;
             min-width: 60%;
             max-width: 60%;
+            width: 60%;
             text-align: left;
             padding: 1%;
-            overflow: auto;
+            overflow-y: auto;
+            word-break: break-word;
         }
 
         .step-ingredient-img-container {

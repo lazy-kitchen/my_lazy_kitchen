@@ -12,7 +12,8 @@
                    group="steps"
                    @start="drag=true"
                    @stop="drag=false"
-                   v-model="steps" >
+                   v-model="steps"
+                    >
             <recipe-step v-for="step in steps" :key="step.id" v-bind:recipe-step="step" />
         </draggable>
         <button id="add_recipe_step_btn" class="add-step" type="button" @click="addStep">Add Step</button>
@@ -87,16 +88,24 @@
     #recipe_steps {
         list-style: none;
         padding-left: 0;
-        width: 100%;
-        /*margin: 2% auto;*/
+        min-width: 93%;
+        max-width: 93%;
+        width: 93%;
+        margin: 0 auto 4%;
         display: flex;
         flex-direction: column;
         overflow: auto;
-        max-height: 70vh;
+        height: 90vh;
+        max-height: 90vh;
         border: 1px solid grey;
+        border-radius: 2%;
+
     }
 
     .add-step {
         align-self: flex-start;
+        cursor: pointer;
+        padding: 1%;
+        width: 30%;
     }
 </style>

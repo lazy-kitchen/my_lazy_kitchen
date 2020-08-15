@@ -19,12 +19,12 @@
                 <input type="number" id="completion_time" name="completion_time" class="form-control form-control-num" min="0" v-model.number="recipe.completionTime" />
             </div>
 
-            <div id="form-group recipe_steps_lists">
+            <div id="recipe_steps_lists">
 <!--                <label for="recipe_steps_container">Instructions</label>-->
-                <recipe-steps id="recipe_steps_container" />
+                <recipe-steps id="recipe_steps_container" :class="stepsContainerSizeClass" />
 
 <!--                <label v-if="this.$store.state.recipes.recipeForm.recipe.removedSteps.length" for="removed_recipe_steps_container">Removed Instructions</label>-->
-                <removed-steps id="removed_recipe_steps_container" />
+                <removed-steps id="removed_recipe_steps_container" :class="stepsContainerSizeClass" />
             </div>
 
             <input type="submit" id="submit_recipe_btn" v-bind:value="buttonText" />
@@ -117,6 +117,20 @@
                         value: value
                     });
                 }
+            },
+            stepsContainerSizeClass: function (): string {
+                if (this.$store.state.recipes.recipeForm.recipe.removedSteps.length) {
+                    return 'steps-half-size'
+                } else {
+                    return 'steps-full-size'
+                }
+            },
+            removedStepsContainerClass: function (): string {
+                if (this.$store.state.recipes.recipeForm.recipe.removedSteps.length) {
+                    return 'steps-half-size'
+                } else {
+                    return 'steps-full-size'
+                }
             }
         },
         methods: {
@@ -196,7 +210,7 @@
         border-radius: 2%;
         box-shadow: 3px 3px 2px #2c3e50;
         min-height: 60vh;
-        width: 70%;
+        width: 80%;
         margin: 0 auto;
         padding: 3%;
 
@@ -226,9 +240,33 @@
         }
 
         #recipe_steps_lists {
-            max-width: 100%;
+            width: 100%;
+            margin: 2% auto;
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
         }
+    }
+
+    #recipe_steps_container {
+        margin: 0.1%;
+        /*justify-self: flex-start;*/
+        border-radius: 2%;
+    }
+
+    #removed_recipe_steps_container {
+        margin: 0.1%;
+        /*justify-self: flex-end;*/
+        border-radius: 2%;
+    }
+
+    .steps-full-size {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .steps-half-size {
+        min-width: 48%;
+        max-width: 48%;
     }
 </style>
