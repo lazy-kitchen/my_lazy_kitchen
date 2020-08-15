@@ -1,5 +1,6 @@
 <template>
     <div v-if="this.steps.length" id="removed_steps_container">
+        <label for="removed_recipe_steps" class="steps-lbl">Removed Steps</label>
         <ul id="removed_recipe_steps" ref="removedRecipeStepsList">
             <recipe-step v-for="step in this.steps" :key="step.id" v-bind:recipe-step="step" />
         </ul>
@@ -47,5 +48,12 @@
         max-height: 90vh;
         border: 1px solid grey;
         border-radius: 2%;
+    }
+
+    .steps-lbl {
+        font-weight: bold;
+        font-size: larger;
+        width: 100%;
+        text-align: left;
     }
 </style>

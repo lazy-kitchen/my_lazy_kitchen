@@ -6,6 +6,8 @@
                 <edit-step />
             </div>
         </modal>
+
+        <label for="recipe_steps" class="steps-lbl">Recipe Steps</label>
         <draggable tag="ul"
                    id="recipe_steps"
                    ref="recipeStepsList"
@@ -107,5 +109,12 @@
         cursor: pointer;
         padding: 1%;
         width: 30%;
+    }
+
+    .steps-lbl {
+        font-weight: bold;
+        font-size: larger;
+        width: 100%;
+        text-align: left;
     }
 </style>

@@ -20,10 +20,8 @@
             </div>
 
             <div id="recipe_steps_lists">
-<!--                <label for="recipe_steps_container">Instructions</label>-->
                 <recipe-steps id="recipe_steps_container" :class="stepsContainerSizeClass" />
 
-<!--                <label v-if="this.$store.state.recipes.recipeForm.recipe.removedSteps.length" for="removed_recipe_steps_container">Removed Instructions</label>-->
                 <removed-steps id="removed_recipe_steps_container" :class="stepsContainerSizeClass" />
             </div>
 
@@ -119,13 +117,6 @@
                 }
             },
             stepsContainerSizeClass: function (): string {
-                if (this.$store.state.recipes.recipeForm.recipe.removedSteps.length) {
-                    return 'steps-half-size'
-                } else {
-                    return 'steps-full-size'
-                }
-            },
-            removedStepsContainerClass: function (): string {
                 if (this.$store.state.recipes.recipeForm.recipe.removedSteps.length) {
                     return 'steps-half-size'
                 } else {
